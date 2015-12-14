@@ -1,0 +1,34 @@
+{
+  "name": "jsxdom",
+  "version": "0.0.0",
+  "description": "JSX to native DOM API transpilation.",
+  "main": "index.js",
+  "dependencies": {
+    "acorn-jsx": "^2.0.1",
+    "escodegen": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/treycordova/jsxdom.git"
+  },
+  "keywords": [
+    "jsx",
+    "dom",
+    "document",
+    "createElement",
+    "transpiler",
+    "transpilation",
+    "react",
+    "vnode"
+  ],
+  "author": "Trey Cordova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/treycordova/jsxdom/issues"
+  },
+  "homepage": "https://github.com/treycordova/jsxdom#readme"
+}
