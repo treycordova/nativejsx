@@ -40,7 +40,7 @@ function closure(body) {
   };
 }
 
-function createElement(variable, tag) {
+function variableDeclaration(variable, callee, varargs) {
   return {
     type: 'VariableDeclaration',
     declarations: [{
@@ -51,15 +51,28 @@ function createElement(variable, tag) {
       },
       init: {
         type: 'CallExpression',
-        callee: member('document', 'createElement'),
-        arguments: [{
-          type: 'Literal',
-          value: tag
-        }]
+        callee,
+        arguments: varargs
       }
     }],
     kind: 'var'
   };
+}
+
+function createElement(variable, tag) {
+  return variableDeclaration(
+    variable,
+    member('document', 'createElement'),
+    [{type: 'Literal', value: tag}]
+  );
+}
+
+function createTextNode(variable, text) {
+  return variableDeclaration(
+    variable,
+    member('document', 'createTextNode'),
+    [{type: 'Literal', value: text}]
+  );
 }
 
 function setAttribute(variable, attribute, assignmentExpression) {
@@ -218,17 +231,24 @@ walk.simple(ast, {
       body.push(appendAST);
 
       for (let key in node) {
-        delete node[key];
+        if (key !== 'children') {
+          delete node[key];
+        }
       }
 
       node.transform = body;
     } else {
 
-      for(let child of node.children) {
-        if (child.transform) {
-          body = body.concat(child.transform);
+      (function something(node) {
+        for(let child of node.children) {
+          if (child.transform) {
+            body = body.concat(child.transform);
+          }
+          if (child.children) {
+            something(child);
+          }
         }
-      }
+      })(node);
 
       let returnElement = returns({
         type: 'Identifier',
@@ -249,7 +269,15 @@ walk.simple(ast, {
   },
   'Literal': (node, state) => {
     if (state.parent) {
-      //let textNode = createTextNode(node.value);
+      let name = next();
+      let value = node.value.replace('\n', '').trim();
+
+      if (value.length) {
+        let textNode = createTextNode(name, node.value);
+        let appendChildNode = appendChild(state.parent, name);
+
+        node.transform = [textNode, appendChildNode];
+      }
     }
   },
   'BinaryExpression': (node, state) => {
