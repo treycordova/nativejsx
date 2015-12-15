@@ -6,7 +6,7 @@ let acorn = require('acorn-jsx');
 
 const ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const ALPHABET_LENGTH = ALPHABET.length;
-const VARIABLE_PREFIX = '__';
+const VARIABLE_PREFIX = '';
 const attributes = { 'className': 'class' };
 const properties = ['required', 'disabled'];
 
@@ -265,14 +265,16 @@ walk.simple(ast, {
       for (let key in body) {
         node[key] = body[key];
       }
+
+      variableIndex = 0;
     }
   },
   'Literal': (node, state) => {
     if (state.parent) {
-      let name = next();
       let value = node.value.replace('\n', '').trim();
 
       if (value.length) {
+        let name = next();
         let textNode = createTextNode(name, node.value);
         let appendChildNode = appendChild(state.parent, name);
 

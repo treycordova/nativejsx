@@ -1,37 +1,37 @@
 function test1() {
     return function () {
-        var __a = document.createElement('div');
-        __a.setAttribute('class', 'className');
-        return __a;
+        var a = document.createElement('div');
+        a.setAttribute('class', 'className');
+        return a;
     }();
 }
 function test2() {
     var hello = function () {
-        var __b = document.createElement('div');
-        __b.setAttribute('id', 'world');
-        var __d = document.createElement('span');
-        __d.setAttribute('class', 'warning');
-        __d.setAttribute('title', 'wut');
-        __b.appendChild(__d);
-        var __e = document.createTextNode('Test');
-        __d.appendChild(__e);
-        var __g = document.createElement('div');
-        __g.setAttribute('class', 'something');
-        __b.appendChild(__g);
-        var __i = document.createElement('span');
-        __g.appendChild(__i);
-        var __j = document.createTextNode('Hello, World!');
-        __i.appendChild(__j);
-        var __l = document.createElement('div');
-        __l.setAttribute('class', 'yesm');
-        __g.appendChild(__l);
-        var __o = document.createElement('input');
-        __o.setAttribute('type', 'text');
-        __o.setAttribute('class', 'rawr');
-        __o.required = true;
-        __o.disabled = true;
-        __b.appendChild(__o);
-        return __b;
+        var a = document.createElement('div');
+        a.setAttribute('id', 'world');
+        var b = document.createElement('span');
+        b.setAttribute('class', 'warning');
+        b.setAttribute('title', 'wut');
+        a.appendChild(b);
+        var c = document.createTextNode('Test');
+        b.appendChild(c);
+        var d = document.createElement('div');
+        d.setAttribute('class', 'something');
+        a.appendChild(d);
+        var e = document.createElement('span');
+        d.appendChild(e);
+        var f = document.createTextNode('Hello, World!');
+        e.appendChild(f);
+        var g = document.createElement('div');
+        g.setAttribute('class', 'yesm');
+        d.appendChild(g);
+        var h = document.createElement('input');
+        h.setAttribute('type', 'text');
+        h.setAttribute('class', 'rawr');
+        h.required = true;
+        h.disabled = true;
+        a.appendChild(h);
+        return a;
     }();
     console.log(hello instanceof HTMLElement);
     return hello;
