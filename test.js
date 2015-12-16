@@ -36,3 +36,30 @@ function test2() {
     console.log(hello instanceof HTMLElement);
     return hello;
 }
+function template() {
+    return function () {
+        var a = document.createElement('div');
+        a.setAttribute('class', 'btn-group');
+        a.setAttribute('role', 'group');
+        a.setAttribute('aria-label', 'Basic example');
+        var b = document.createElement('button');
+        b.setAttribute('type', 'button');
+        b.setAttribute('class', 'btn btn-secondary');
+        a.appendChild(b);
+        var c = document.createTextNode('Left');
+        b.appendChild(c);
+        var d = document.createElement('button');
+        d.setAttribute('type', 'button');
+        d.setAttribute('class', 'btn btn-secondary');
+        a.appendChild(d);
+        var e = document.createTextNode('Middle');
+        d.appendChild(e);
+        var f = document.createElement('button');
+        f.setAttribute('type', 'button');
+        f.setAttribute('class', 'btn btn-secondary');
+        a.appendChild(f);
+        var g = document.createTextNode('Right');
+        f.appendChild(g);
+        return a;
+    }();
+}
