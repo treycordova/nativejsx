@@ -2,6 +2,9 @@
 
 let generators = {};
 
+generators.ALLOWABLE_DECLARATION_TYPES = ['var', 'let'];
+generators.DECLARATION_TYPE = 'var';
+
 /**
  * JavaScript Node Generators
  */
@@ -20,6 +23,14 @@ let literal = generators.literal = (value) => {
   };
 }
 
+let member = generators.member = (object, property) => {
+  return {
+    type: 'MemberExpression',
+    object: identifier(object),
+    property: identifier(property)
+  };
+}
+
 let expressionStatement = generators.expressionStatement = (expression) => {
   return {
     type: 'ExpressionStatement',
@@ -27,24 +38,15 @@ let expressionStatement = generators.expressionStatement = (expression) => {
   };
 };
 
-let callExpression = generators.callExpression = (callee, varargs, body) => {
+let callExpression = generators.callExpression = (callee, varargs) => {
   let callExpression = {
     type: 'CallExpression',
     callee
   };
 
   callExpression.arguments = varargs || [];
-  callExpression.body = body || [];
 
   return callExpression;
-}
-
-let member = generators.member = (object, property) => {
-  return {
-    type: 'MemberExpression',
-    object: identifier(object),
-    property: identifier(property)
-  };
 }
 
 let variableDeclaration = generators.variableDeclaration = (variable, callee, varargs) => {
@@ -55,7 +57,7 @@ let variableDeclaration = generators.variableDeclaration = (variable, callee, va
       id: identifier(variable),
       init: callExpression(callee, varargs)
     }],
-    kind: 'var'
+    kind: generators.DECLARATION_TYPE
   };
 }
 
