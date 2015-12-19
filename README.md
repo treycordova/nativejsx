@@ -25,8 +25,8 @@ Now we bake it in `jsxdom` using `jsxdom.parse`:
 var jsxdom = require('jsxdom');
 
 var transpiledGoodness = jsxdom.parse('dat-btn-group.js', {
-  variableDeclaration: 'var',
-  prefix: '$$'
+  declarationType: 'var',
+  variablePrefix: '$$'
 });
 
 console.log(transpiledGoodness);
