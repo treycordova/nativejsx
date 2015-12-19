@@ -2,8 +2,9 @@
   "name": "jsxdom",
   "version": "1.0.0",
   "description": "JSX to native DOM API transpilation.",
-  "main": "index.js",
+  "main": "source/jsxdom.js",
   "dependencies": {
+    "acorn": "^2.6.4",
     "acorn-jsx": "^2.0.1",
     "escodegen": "^1.7.1"
   },
@@ -12,7 +13,9 @@
     "mocha": "^2.3.4"
   },
   "engines": [
-    {"node": ">= 5.2 <5.3"}
+    {
+      "node": ">= 5.2 <5.3"
+    }
   ],
   "scripts": {
     "test": "./node_modules/.bin/mocha --harmony --harmony_destructuring",

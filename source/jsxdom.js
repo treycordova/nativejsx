@@ -4,7 +4,7 @@ let fs = require('fs');
 let util = require('util');
 let escodegen = require('escodegen');
 let acorn = require('acorn-jsx');
-let walk = require('../node_modules/acorn-jsx/node_modules/acorn/dist/walk.js');
+let walk = require('acorn/dist/walk');
 
 let jsxdom = {};
 
