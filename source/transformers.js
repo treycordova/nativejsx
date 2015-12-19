@@ -20,66 +20,56 @@ let transformers = {};
  * JSX to DOM transformers
  */
 
-transformers.JSXElement = (node, state) => {
-  let openingElement = node.openingElement;
-  let elementAST = createElement(state.name, openingElement.name.name);
-  let body = [elementAST];
+function transformJSXAttributes(state, attributes) {
+  let transformed = [];
 
-  for(let attribute of openingElement.attributes) {
-    let attributeAST = setAttribute(
-      state.name,
-      attribute.name.name,
-      attribute.value
+  for(let attribute of attributes) {
+    transformed.push(
+      setAttribute(
+        state.name,
+        attribute.name.name,
+        attribute.value
+      )
     );
-
-    body.push(attributeAST);
   }
 
+  return transformed;
+}
+
+transformers.JSXElement = (node, state) => {
+  let body = [
+    createElement(state.name, node.openingElement.name.name),
+    ...transformJSXAttributes(state, node.openingElement.attributes)
+  ];
+
   if (state.parent) {
-    let appendAST = appendChild(state.parent, state.name);
-    body.push(appendAST);
-
-    for (let key in node) {
-      if (key !== 'children') {
-        delete node[key];
-      }
-    }
-
-    node.transform = body;
+    node.transform = body.concat(
+      appendChild(state.parent, state.name)
+    );
   } else {
-
-    (function something(node) {
+    (function flatten(node) {
       for(let child of node.children) {
-        if (child.transform) {
-          body = body.concat(child.transform);
-        }
-        if (child.children) {
-          something(child);
-        }
+        if (child.transform) body = body.concat(child.transform);
+        if (child.children) flatten(child);
       }
     })(node);
 
-    let returnElement = returns(identifier(state.name));
+    body = closure(
+      body.concat(
+        returns(identifier(state.name))
+      )
+    );
 
-    body.push(returnElement);
-    body = closure(body);
-
-    for (let key in node) {
-      delete node[key];
-    }
-
-    for (let key in body) {
-      node[key] = body[key];
-    }
+    for (let key in body) node[key] = body[key];
   }
 }
 
 transformers.Literal = (node, state) => {
   if (state.parent && state.name) {
-    let textNode = createTextNode(state.name, node.value);
-    let appendChildNode = appendChild(state.parent, state.name);
-
-    node.transform = [textNode, appendChildNode];
+    node.transform = [
+      createTextNode(state.name, node.value),
+      appendChild(state.parent, state.name)
+    ];
   }
 }
 
