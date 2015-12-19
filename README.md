@@ -62,9 +62,9 @@ function template() {
 }
 ```
 #### Options
-##### variableDeclaration
+##### declarationType
 Either `var` or `let`.
-##### prefix
+##### variablePrefix
 Any string you can conjure up that produces a _valid_ JavaScript variable (Nice try, ;)).
 #### Development
 ##### Wish List
