@@ -4,6 +4,11 @@ Want all the goodness of JSX without the React dependency?
 **Wait**, not quite _all_ of the goodness, but a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
 
 I know. "Why all the words?" Just show you something.
+##### IMPORTANT NOTE:
+All compilation **requires** node 5.2 or greater _including_ the `--harmony_destructuring` flag. For example:
+```
+$ node --harmony_destructuring my-jsxdom-script.js
+```
 
 #### Example
 
