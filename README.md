@@ -17,7 +17,7 @@ Here's the scenario, Capitan:
 function template() {
   return (
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary">Left</button>
+      <button type="button" class="btn btn-secondary" onclick={eventListener}>Left</button>
       <button type="button" class="btn btn-secondary">Middle</button>
       <button type="button" class="btn btn-secondary">Right</button>
     </div>
@@ -47,6 +47,7 @@ function template() {
       var $$b = document.createElement('button');
         $$b.setAttribute('type', 'button');
         $$b.setAttribute('class', 'btn btn-secondary');
+        $$b.addEventListener('click', eventListener);
         $$a.appendChild($$b);
         var $$c = document.createTextNode('Left');
           $$b.appendChild($$c);
@@ -69,12 +70,16 @@ function template() {
 #### Options
 ##### declarationType
 Either `var` or `let`.
+
+Defaults to `var`.
 ##### variablePrefix
 Any string you can conjure up that produces a _valid_ JavaScript variable (Nice try, ;)).
+
+Defaults to `$$`.
 #### Development
 ##### Wish List
 - Tests.
-- JSXExpressions. Right now, `{}` is missing. That makes me sad.
+- Nodal JSXExpressions.
 - Distribution through NPM.
 - Source maps.
 - (Your suggestion.)
