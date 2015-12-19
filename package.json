@@ -1,6 +1,6 @@
 {
   "name": "jsxdom",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "JSX to native DOM API transpilation.",
   "main": "source/jsxdom.js",
   "dependencies": {
