@@ -7,9 +7,13 @@
     "acorn-jsx": "^2.0.1",
     "escodegen": "^1.7.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --harmony --harmony_destructuring",
+    "build": "node --harmony_destructuring ."
   },
   "repository": {
     "type": "git",
