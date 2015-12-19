@@ -11,6 +11,9 @@
     "chai": "^3.4.1",
     "mocha": "^2.3.4"
   },
+  "engines": [
+    {"node": ">= 5.2 <5.3"}
+  ],
   "scripts": {
     "test": "./node_modules/.bin/mocha --harmony --harmony_destructuring",
     "build": "node --harmony_destructuring ."
