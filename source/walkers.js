@@ -71,6 +71,7 @@ walkers.JSXElement = (node, state, c) => {
 }
 
 walkers.JSXExpressionContainer = (node, state, c) => {
+  console.log('yello');
   c(node.expression, 'JSXExpression');
 }
 

@@ -10,6 +10,7 @@ let {
   createElement,
   createTextNode,
   setAttribute,
+  addEventListener,
   appendChild,
   returnElement
 } = require('./compositions.js');
@@ -24,13 +25,28 @@ function transformJSXAttributes(state, attributes) {
   let transformed = [];
 
   for(let attribute of attributes) {
-    transformed.push(
-      setAttribute(
-        state.name,
-        attribute.name.name,
-        attribute.value
-      )
-    );
+    let name = attribute.name.name;
+    let value = attribute.value.expression ?
+      attribute.value.expression :
+      attribute.value;
+
+    if (name.startsWith('on')) {
+      transformed.push(
+        addEventListener(
+          state.name,
+          name.substring(2).toLowerCase(),
+          value
+        )
+      );
+    } else {
+      transformed.push(
+        setAttribute(
+          state.name,
+          name,
+          value
+        )
+      );
+    }
   }
 
   return transformed;
@@ -65,7 +81,7 @@ transformers.JSXElement = (node, state) => {
 }
 
 transformers.Literal = (node, state) => {
-  if (state.parent && state.name) {
+  if (state && state.parent && state.name) {
     node.transform = [
       createTextNode(state.name, node.value),
       appendChild(state.parent, state.name)

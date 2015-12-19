@@ -25,7 +25,7 @@ compositions.createElement = (variable, tag) => {
     member('document', 'createElement'),
     [literal(tag)]
   );
-}
+};
 
 compositions.createTextNode = (variable, text) => {
   return variableDeclaration(
@@ -33,7 +33,7 @@ compositions.createTextNode = (variable, text) => {
     member('document', 'createTextNode'),
     [literal(text)]
   );
-}
+};
 
 compositions.setAttribute = (variable, attribute, assignmentExpression) => {
   let isProperty = properties.indexOf(attribute) !== -1;
@@ -52,7 +52,16 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
       )
     );
   }
-}
+};
+
+compositions.addEventListener = (variable, event, expression) => {
+  return expressionStatement(
+    callExpression(
+      member(variable, 'addEventListener'),
+      [literal(event), expression]
+    )
+  );
+};
 
 compositions.appendChild = (parent, child) => {
   return expressionStatement(
@@ -61,6 +70,6 @@ compositions.appendChild = (parent, child) => {
       [identifier(child)]
     )
   );
-}
+};
 
 module.exports = compositions;

@@ -35,6 +35,17 @@ describe('compositions', function() {
     });
   });
 
+  describe('addEventListener', function() {
+    it('builds `hello.addEventListener(\'click\', world);`', function() {
+      assert.equal(
+        escodegen.generate(
+          compositions.addEventListener('hello', 'click', generators.identifier('world'))
+        ),
+        "hello.addEventListener('click', world);"
+      );
+    });
+  });
+
   describe('appendChild', function() {
     it('builds `hello.appendChild(\'world\');`', function() {
       assert.equal(
