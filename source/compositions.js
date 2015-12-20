@@ -27,11 +27,11 @@ compositions.createElement = (variable, tag) => {
   );
 };
 
-compositions.createTextNode = (variable, text) => {
+compositions.createTextNode = (variable, expression) => {
   return variableDeclaration(
     variable,
     member('document', 'createTextNode'),
-    [literal(text)]
+    [expression]
   );
 };
 

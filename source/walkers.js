@@ -54,6 +54,7 @@ walkers.JSXElement = (node, state, c) => {
           });
         }
         break;
+      case 'JSXExpressionContainer':
       case 'JSXElement':
         c(child, {
           name: next(),
@@ -70,9 +71,6 @@ walkers.JSXElement = (node, state, c) => {
   }
 }
 
-walkers.JSXExpressionContainer = (node, state, c) => {
-  console.log('yello');
-  c(node.expression, 'JSXExpression');
-}
+walkers.JSXExpressionContainer = () => {}
 
 module.exports = walkers;

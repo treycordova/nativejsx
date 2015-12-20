@@ -18,7 +18,9 @@ describe('compositions', function() {
   describe('createTextNode', function() {
     it('builds `var hello = document.createTextNode(\'Hello\');`', function() {
       assert.equal(
-        escodegen.generate(compositions.createTextNode('hello', 'Hello')),
+        escodegen.generate(
+          compositions.createTextNode('hello', generators.literal('Hello'))
+        ),
         "var hello = document.createTextNode('Hello');"
       );
     });

@@ -3,6 +3,7 @@
 let {
   returns,
   identifier,
+  literal,
   closure
 } = require('./generators.js');
 
@@ -50,7 +51,7 @@ function transformJSXAttributes(state, attributes) {
   }
 
   return transformed;
-}
+};
 
 transformers.JSXElement = (node, state) => {
   let body = [
@@ -78,15 +79,26 @@ transformers.JSXElement = (node, state) => {
 
     for (let key in body) node[key] = body[key];
   }
-}
+};
+
+transformers.JSXExpressionContainer = (node, state) => {
+  if (node.expression.type === 'JSXElement') {
+    node.transform = appendChild(state.parent, state.name);
+  } else {
+    node.transform = [
+      createTextNode(state.name, node.expression),
+      appendChild(state.parent, state.name)
+    ];
+  }
+};
 
 transformers.Literal = (node, state) => {
   if (state && state.parent && state.name) {
     node.transform = [
-      createTextNode(state.name, node.value),
+      createTextNode(state.name, literal(node.value)),
       appendChild(state.parent, state.name)
     ];
   }
-}
+};
 
 module.exports = transformers;
