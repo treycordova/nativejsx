@@ -69,29 +69,22 @@ function template() {
 }
 ```
 #### API
+```javascript
+parse(String:fileName, Object:options) // => Promise
+parseSync(String:fileName, Object:options) // => String
+transpile(String:jsx) // => String
+```
+##### Options
+**declarationType**: Either `var` (default) or `let`.
 
-##### `parse(String:fileName, Object:options) => Promise`
-##### `parseSync(String:fileName, Object:options) => String`
-##### `transpile(String:jsx) => String`
+**variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
 
-#### Options
-##### declarationType
-Either `var` or `let`.
+**acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}}`.
 
-Defaults to `var`.
-##### variablePrefix
-Any string you can conjure up that produces a _valid_ JavaScript variable (Nice try, ;)).
-
-Defaults to `$$`.
-##### acorn
-All acorn options are available through acorn.js's options, available [here](https://github.com/ternjs/acorn#main-parser).
-
-Defaults to `{plugins: {jsx: true}}` (this default cannot be removed, and will be forcibly merged).
 #### Development
 ##### Wish List
-- Tests.
+- More Tests.
 - Nodal JSXExpressions.
-- Distribution through NPM.
 - Source maps.
 - (Your suggestion.)
 
