@@ -27,8 +27,9 @@ let walker = jsxdom.walker = walk.make(require('./walkers.js'));
 let transformers = jsxdom.transformers = require('./transformers.js');
 let safeOptions = (options) => {
   let copy = merge(
-    util.isObject(options) ? options : {},
-    defaults
+    {},
+    defaults,
+    util.isObject(options) ? options : {}
   );
 
   // Make sure that the JSX plugin isn't clobbered.
@@ -81,12 +82,12 @@ let transpile = jsxdom.transpile = (jsx, options) => {
  * @returns {Promise} - A Promise that resolves when the file is read and transpiled.
  */
 jsxdom.parse = (file, options) => {
-  options = safeOptions(options);
+  let safe = safeOptions(options);
 
   return new Promise((resolve, reject) => {
-    fs.readFile(file, options.encoding, function(error, contents) {
+    fs.readFile(file, safe.encoding, function(error, contents) {
       if (error) return reject(error);
-      resolve(transpile(contents, options));
+      resolve(transpile(contents, safe));
     });
   });
 };
@@ -102,10 +103,10 @@ jsxdom.parse = (file, options) => {
  * @returns {String} - A String containing valid JavaScript.
  */
 jsxdom.parseSync = (file, options) => {
-  options = safeOptions(options);
+  let safe = safeOptions(options);
 
   return transpile(
-    fs.readFileSync(file, options.encoding),
+    fs.readFileSync(file, safe.encoding),
     options
   );
 };
