@@ -75,11 +75,9 @@ parseSync(String:fileName, Object:options) // => String
 transpile(String:jsx) // => String
 ```
 ##### Options
-**declarationType**: Either `var` (default) or `let`.
-
-**variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
-
-**acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}}`.
+- **declarationType**: Either `var` (default) or `let`.
+- **variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
+- **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}}`.
 
 #### Development
 ##### Wish List
