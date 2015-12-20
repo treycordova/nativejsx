@@ -29,12 +29,13 @@ Now we bake it in `jsxdom` using `jsxdom.parse`:
 ```javascript
 var jsxdom = require('jsxdom');
 
-var transpiledGoodness = jsxdom.parse('dat-btn-group.js', {
+jsxdom.parse('dat-btn-group.js', {
   declarationType: 'var',
   variablePrefix: '$$'
+}).then(function(transpiledGoodness) {
+  console.log(transpiledGoodness);
 });
 
-console.log(transpiledGoodness);
 ```
 That `console.log` hussles to show you the amazing native DOM API output.
 ```javascript
@@ -67,6 +68,12 @@ function template() {
   }();
 }
 ```
+#### API
+
+##### `parse(String:fileName, Object:options) => Promise`
+##### `parseSync(String:fileName, Object:options) => String`
+##### `transpile(String:jsx) => String`
+
 #### Options
 ##### declarationType
 Either `var` or `let`.
@@ -76,6 +83,10 @@ Defaults to `var`.
 Any string you can conjure up that produces a _valid_ JavaScript variable (Nice try, ;)).
 
 Defaults to `$$`.
+##### acorn
+All acorn options are available through acorn.js's options, available [here](https://github.com/ternjs/acorn#main-parser).
+
+Defaults to `{plugins: {jsx: true}}` (this default cannot be removed, and will be forcibly merged).
 #### Development
 ##### Wish List
 - Tests.
