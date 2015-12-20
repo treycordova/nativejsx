@@ -6,7 +6,8 @@
   "dependencies": {
     "acorn": "^2.6.4",
     "acorn-jsx": "^2.0.1",
-    "escodegen": "^1.7.1"
+    "escodegen": "^1.7.1",
+    "merge": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
