@@ -87,13 +87,10 @@ transpile(String:jsx) // => String
 - (Your suggestion.)
 
 ##### Terminology
-###### Compositions
-These are endgame native DOM ASTs that we plan on swapping with JSX.
-###### Generators
-Barebone AST node types (some are compositions of node types).
-###### Transformers
-Takes compositions and generators and _actually_ completes the swapping.
-###### Walkers
-Set up the state, allocate variables, and traverses JSXElements to our liking.
+- **Compositions**: These are endgame native DOM ASTs that we plan on swapping with JSX.
+- **Generators**: Barebone AST node types (some are compositions of node types).
+- **Transformers**: Takes compositions and generators and _actually_ completes the swapping.
+- **Walkers**: Set up the state, allocate variables, and traverses JSXElements to our liking.
+
 #### Why does it output everything in a closure?
 I'm glad you stuck around to ask. Due to the imperative nature of the native DOM API, we're outputting variable allocations – you know, the "$$a" stuff. To avoid variable clobbering, our DOM goodies are tucked away into a JavaScript closure, safe and sound.
