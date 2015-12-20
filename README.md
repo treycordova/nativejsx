@@ -1,4 +1,4 @@
-## jsxdom
+## jsxdom [![Build Status](https://travis-ci.org/treycordova/jsxdom.svg?branch=master)](https://travis-ci.org/treycordova/jsxdom)
 #### JSX to native DOM API transpilation.
 Want all the goodness of JSX without the React dependency?
 **Wait**, not quite _all_ of the goodness, but a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
