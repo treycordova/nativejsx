@@ -82,7 +82,7 @@ transpile(String:jsx) // => String
 #### Development
 ##### Wish List
 - More Tests.
-- Nodal JSXExpressions.
+- Hardened Nodal JSXExpressions.
 - Source maps.
 - (Your suggestion.)
 
