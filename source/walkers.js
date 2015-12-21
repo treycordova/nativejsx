@@ -11,6 +11,22 @@ let walkers = {};
  * AST Walkers
  */
 
+walkers.CallExpression = (node, state, c) => {
+  c(node.callee, state, 'Expression');
+  if (node.arguments) {
+    for(let argument of node.arguments) {
+      if (argument.type === 'JSXElement') {
+        c(argument, {
+          name: next(),
+          parent: null
+        });
+      } else {
+        c(argument, state, 'Expression');
+      }
+    }
+  }
+};
+
 walkers.ReturnStatement = (node, state, c) => {
   if (node.argument) {
     if (node.argument.type === 'JSXElement') {
@@ -66,11 +82,13 @@ walkers.JSXElement = (node, state, c) => {
     }
   }
 
-  if(state.parent === null) {
+  if(state && state.parent === null) {
     reset();
   }
 }
 
-walkers.JSXExpressionContainer = () => {}
+walkers.JSXExpressionContainer = (node, state, c) => {
+  c(node.expression, state);
+};
 
 module.exports = walkers;
