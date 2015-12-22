@@ -13,6 +13,7 @@ let {
   setAttribute,
   addEventListener,
   appendChild,
+  appendChildren,
   returnElement
 } = require('./compositions.js');
 
@@ -82,14 +83,7 @@ transformers.JSXElement = (node, state) => {
 };
 
 transformers.JSXExpressionContainer = (node, state) => {
-  if (node.expression.type === 'JSXElement') {
-    node.transform = appendChild(state.parent, state.name);
-  } else {
-    node.transform = [
-      createTextNode(state.name, node.expression),
-      appendChild(state.parent, state.name)
-    ];
-  }
+  node.transform = appendChildren(state.parent, node.expression);
 };
 
 transformers.Literal = (node, state) => {

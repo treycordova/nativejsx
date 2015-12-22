@@ -56,4 +56,15 @@ describe('compositions', function() {
       );
     });
   });
+
+  describe('appendChildren', function() {
+    it('builds `hello.appendChildren(world);`', function() {
+      assert.equal(
+        escodegen.generate(
+          compositions.appendChildren('hello', generators.identifier('world'))
+        ),
+        "hello.appendChildren(world);"
+      );
+    });
+  });
 });

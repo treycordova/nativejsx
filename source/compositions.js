@@ -72,4 +72,13 @@ compositions.appendChild = (parent, child) => {
   );
 };
 
+compositions.appendChildren = (parent, expression) => {
+  return expressionStatement(
+    callExpression(
+      member(parent, 'appendChildren'),
+      [expression]
+    )
+  );
+};
+
 module.exports = compositions;

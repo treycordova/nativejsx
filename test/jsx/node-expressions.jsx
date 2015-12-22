@@ -8,3 +8,13 @@ function test() {
     </div>
   );
 }
+
+function test2() {
+  return (
+    <ul>
+      {[1, 2, 3].map(function(item) {
+        return <li>{item}</li>;
+      })}
+    </ul>
+  );
+}
