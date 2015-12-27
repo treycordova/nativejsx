@@ -23,41 +23,23 @@ let transformers = {};
  * JSX to DOM transformers
  */
 
-function transformJSXAttributes(state, attributes) {
-  let transformed = [];
+transformers.JSXAttribute = (node, state) => {
+  let name = node.name.name;
+  let value = node.value.expression ?
+    node.value.expression :
+    node.value;
+  let transform = name.startsWith('on') ?
+    addEventListener(state.name, name.substring(2).toLowerCase(), value) :
+    setAttribute(state.name, name, value);
 
-  for(let attribute of attributes) {
-    let name = attribute.name.name;
-    let value = attribute.value.expression ?
-      attribute.value.expression :
-      attribute.value;
-
-    if (name.startsWith('on')) {
-      transformed.push(
-        addEventListener(
-          state.name,
-          name.substring(2).toLowerCase(),
-          value
-        )
-      );
-    } else {
-      transformed.push(
-        setAttribute(
-          state.name,
-          name,
-          value
-        )
-      );
-    }
-  }
-
-  return transformed;
+  for(let key in node) delete node[key];
+  for(let key in transform) node[key] = transform[key];
 };
 
 transformers.JSXElement = (node, state) => {
   let body = [
     createElement(state.name, node.openingElement.name.name),
-    ...transformJSXAttributes(state, node.openingElement.attributes)
+    ...node.openingElement.attributes
   ];
 
   if (state.parent) {

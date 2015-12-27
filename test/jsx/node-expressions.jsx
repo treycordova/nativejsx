@@ -1,8 +1,9 @@
 function test() {
   var hello = 'Hello, World!';
+  var listener = function() {};
 
   return (
-    <div>
+    <div className="yes" onclick={listener}>
       {hello}
       <div>Hello, World!</div>
     </div>

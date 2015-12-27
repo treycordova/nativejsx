@@ -13,13 +13,11 @@ let walkers = {};
 
 walkers.CallExpression = (node, state, c) => {
   c(node.callee, state, 'Expression');
+
   if (node.arguments) {
     for(let argument of node.arguments) {
       if (argument.type === 'JSXElement') {
-        c(argument, {
-          name: next(),
-          parent: null
-        });
+        c(argument, {name: next(), parent: null});
       } else {
         c(argument, state, 'Expression');
       }
@@ -32,8 +30,7 @@ walkers.ReturnStatement = (node, state, c) => {
     if (node.argument.type === 'JSXElement') {
       c(node.argument, {
         name: next(),
-        parent: null,
-        returned: true
+        parent: null
       });
     } else {
       c(node.argument, state, 'Expression');
@@ -48,8 +45,7 @@ walkers.VariableDeclarator = (node, state, c) => {
     if (node.init.type === 'JSXElement') {
       c(node.init, {
         name: next(),
-        parent: null,
-        assignment: node.id.name
+        parent: null
       });
     } else {
       c(node.init, state, 'Expression');
@@ -58,6 +54,10 @@ walkers.VariableDeclarator = (node, state, c) => {
 }
 
 walkers.JSXElement = (node, state, c) => {
+  for(let attribute of node.openingElement.attributes) {
+    c(attribute, state);
+  }
+
   for(let child of node.children) {
     switch(child.type) {
       case 'Literal':
@@ -90,5 +90,7 @@ walkers.JSXElement = (node, state, c) => {
 walkers.JSXExpressionContainer = (node, state, c) => {
   c(node.expression, state);
 };
+
+walkers.JSXAttribute = function() {};
 
 module.exports = walkers;

@@ -2,8 +2,144 @@
 
 let assert = require('chai').assert;
 let transformers = require('../source/transformers.js');
+let generators = require('../source/generators.js');
 
 describe('transformers', function() {
+  describe('JSXAttribute', function() {
+    let node;
+    let state;
+
+    beforeEach(function() {
+      node = {name: {name: 'name'}, value: generators.literal('value')};
+      state = {name: 'name'};
+    });
+
+    describe('when attribute is an event', function() {
+      beforeEach(function() {
+        node.name.name = 'onclick';
+      });
+
+      it('transforms into an `addEventListener`, removing "on"', function() {
+        transformers.JSXAttribute(node, state);
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.object.name',
+          state.name
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.property.name',
+          'addEventListener'
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.arguments[0].value',
+          'click'
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.arguments[1].value',
+          'value'
+        );
+      });
+    });
+
+    describe('when attribute is an HTML attribute and value', function() {
+
+      it('transforms into a `setAttribute`', function() {
+        transformers.JSXAttribute(node, state);
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.object.name',
+          state.name
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.property.name',
+          'setAttribute'
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.arguments[1].value',
+          'value'
+        );
+      });
+
+      describe('when attribute isn\'t mapped', function() {
+        beforeEach(function() {
+          node.name.name = 'id';
+        });
+
+        it('preserves the attribute name', function() {
+          transformers.JSXAttribute(node, state);
+
+          assert.deepPropertyVal(
+            node,
+            'expression.arguments[0].value',
+            'id'
+          );
+        });
+      });
+
+      describe('when attribute is mapped', function() {
+        beforeEach(function() {
+          node.name.name = 'className';
+        });
+
+        it('maps the attribute name', function() {
+          transformers.JSXAttribute(node, state);
+
+          assert.deepPropertyVal(
+            node,
+            'expression.arguments[0].value',
+            'class'
+          );
+        });
+      });
+    });
+
+    describe('when attribute is an HTML property', function() {
+      beforeEach(function() {
+        node.name.name = 'required';
+      });
+
+      it('transforms into a property assignment', function() {
+        transformers.JSXAttribute(node, state);
+
+        assert.deepPropertyVal(
+          node,
+          'expression.operator',
+          '='
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.left.object.name',
+          state.name
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.left.property.name',
+          'required'
+        );
+
+        assert.deepPropertyVal(
+          node,
+          'expression.right.value',
+          true
+        );
+      });
+    });
+  });
+
   describe('JSXElement', function() {
     let element;
     let state;
