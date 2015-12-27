@@ -4,11 +4,6 @@ Want all the goodness of JSX without the React dependency?
 **Wait**, not quite _all_ of the goodness, but a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
 
 I know. "Why all the words?" Just show you something.
-##### IMPORTANT NOTE:
-All compilation **requires** node 5.2 or greater _including_ the `--harmony_destructuring` flag. For example:
-```
-$ node --harmony_destructuring my-jsxdom-script.js
-```
 
 #### Example
 
@@ -68,6 +63,18 @@ function template() {
   }();
 }
 ```
+##### IMPORTANT NOTES:
+###### Destructuring
+All compilation **requires** node 5.2 or greater _including_ the `--harmony_destructuring` flag. For example:
+```bash
+$ node --harmony_destructuring my-jsxdom-script.js
+```
+##### Frontend Dependency
+A _very_ tiny JavaScript file located in `dist`, `appendChildren` is **required**.
+```html
+<script type="text/javascript" src="path/to/appendChildren.js"></script>
+```
+
 #### API
 ```javascript
 parse(String:fileName, Object:options) // => Promise
@@ -81,8 +88,8 @@ transpile(String:jsx) // => String
 
 #### Development
 ##### Wish List
-- More Tests.
-- Hardened Nodal JSXExpressions.
+- ~~More Tests~~.
+- ~~Hardened Nodal JSXExpressions~~.
 - Source maps.
 - Gulp and grunt plugins.
 - (Your suggestion.)
@@ -93,5 +100,7 @@ transpile(String:jsx) // => String
 - **Transformers**: Takes compositions and generators and _actually_ completes the swapping.
 - **Walkers**: Set up the state, allocate variables, and traverses JSXElements to our liking.
 
+#### What the heck is `appendChildren`?
+`appendChildren` helps clean up the mess JSXExpressions (the {} things) leave due to JavaScript's lack of static typing. I can't rightly tell if the expressions your fingers conjure up are going to return JSX, literals, or whatever else.
 #### Why does it output everything in a closure?
 I'm glad you stuck around to ask. Due to the imperative nature of the native DOM API, we're outputting variable allocations – you know, the "$$a" stuff. To avoid variable clobbering, our DOM goodies are tucked away into a JavaScript closure, safe and sound.
