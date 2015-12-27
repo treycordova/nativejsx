@@ -69,7 +69,7 @@ All compilation **requires** node 5.2 or greater _including_ the `--harmony_dest
 ```bash
 $ node --harmony_destructuring my-jsxdom-script.js
 ```
-##### Frontend Dependency
+###### Frontend Dependency
 A _very_ tiny JavaScript file located in `dist`, `appendChildren` is **required**.
 ```html
 <script type="text/javascript" src="path/to/appendChildren.js"></script>
