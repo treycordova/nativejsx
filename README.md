@@ -77,7 +77,7 @@ A _very_ tiny JavaScript file located in `dist`, `appendChildren.js`, is **requi
 
 #### API
 ```javascript
-parse(/* String: */ fileName, /* Object: */ options) // => Promise
+parse(/* String: */ fileName, /* Object: */ options) // => Promise => String
 parseSync(/* String: */ fileName, /* Object: */ options) // => String
 transpile(/* String: */ jsx) // => String
 ```
