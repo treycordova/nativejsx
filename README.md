@@ -86,6 +86,10 @@ transpile(/* String: */ jsx) // => String
 - **variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
 - **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}}`.
 
+#### Build Tools
+- **Webpack**: [jsxdom-loader](https://github.com/treycordova/jsxdom-loader)
+- **gulpjs**: Coming soon.
+- **gruntjs**: Coming soon.
 #### Development
 ##### Wish List
 - ~~More Tests~~.
