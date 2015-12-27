@@ -78,8 +78,8 @@ A _very_ tiny JavaScript file located in `dist`, `appendChildren.js`, is **requi
 #### API
 ```javascript
 parse(/* String: */ fileName, /* Object: */ options) // => Promise
-parseSync(/* String:*/ fileName, /* Object:*/ options) // => String
-transpile(/* String:*/ jsx) // => String
+parseSync(/* String: */ fileName, /* Object: */ options) // => String
+transpile(/* String: */ jsx) // => String
 ```
 ##### Options
 - **declarationType**: Either `var` (default) or `let`.
