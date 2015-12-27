@@ -70,16 +70,16 @@ All compilation **requires** node 5.2 or greater _including_ the `--harmony_dest
 $ node --harmony_destructuring my-jsxdom-script.js
 ```
 ###### Frontend Dependency
-A _very_ tiny JavaScript file located in `dist`, `appendChildren` is **required**.
+A _very_ tiny JavaScript file located in `dist`, `appendChildren.js`, is **required**.
 ```html
 <script type="text/javascript" src="path/to/appendChildren.js"></script>
 ```
 
 #### API
 ```javascript
-parse(String:fileName, Object:options) // => Promise
-parseSync(String:fileName, Object:options) // => String
-transpile(String:jsx) // => String
+parse(/* String: */ fileName, /* Object: */ options) // => Promise
+parseSync(/* String:*/ fileName, /* Object:*/ options) // => String
+transpile(/* String:*/ jsx) // => String
 ```
 ##### Options
 - **declarationType**: Either `var` (default) or `let`.
