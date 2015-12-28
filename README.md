@@ -89,14 +89,14 @@ transpile(/* String: */ jsx) // => String
 #### Build Tools
 - **Webpack**: [jsxdom-loader](https://github.com/treycordova/jsxdom-loader).
 - **Grunt**: [grunt-jsxdom](https://github.com/treycordova/grunt-jsxdom).
-- **Gulp**: Coming soon.
+- **Gulp**: [gulp-jsxdom](https://github.com/treycordova/gulp-jsxdom).
 
 #### Development
 ##### Wish List
 - ~~More Tests~~.
 - ~~Hardened Nodal JSXExpressions~~.
+- ~~Gulp, grunt, and webpack plugins~~.
 - Source maps.
-- Gulp and grunt plugins.
 - (Your suggestion.)
 
 ##### Terminology
