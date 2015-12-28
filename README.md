@@ -100,10 +100,11 @@ transpile(/* String: */ jsx) // => String
 - (Your suggestion.)
 
 ##### Terminology
+- **AST**: Abstract syntax tree.
 - **Compositions**: These are endgame native DOM ASTs that we plan on swapping with JSX.
-- **Generators**: Barebone AST node types (some are compositions of node types).
+- **Generators**: Barebone AST node types (some are combinations of node types).
 - **Transformers**: Takes compositions and generators and _actually_ completes the swapping.
-- **Walkers**: Set up the state, allocate variables, and traverses JSXElements to our liking.
+- **Walkers**: Sets up the state, allocates variables, and traverses JSXElements to our liking.
 
 #### What the heck is `appendChildren`?
 `appendChildren` helps clean up the mess JSXExpressions (the {} things) leave due to JavaScript's lack of static typing. I can't rightly tell if the expressions your fingers conjure up are going to return JSX, literals, or whatever else.
