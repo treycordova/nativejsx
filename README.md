@@ -87,9 +87,9 @@ transpile(/* String: */ jsx) // => String
 - **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}}`.
 
 #### Build Tools
-- **Webpack**: [jsxdom-loader](https://github.com/treycordova/jsxdom-loader)
-- **gulpjs**: Coming soon.
-- **gruntjs**: Coming soon.
+- **Webpack**: [jsxdom-loader](https://github.com/treycordova/jsxdom-loader).
+- **Grunt**: [grunt-jsxdom](https://github.com/treycordova/grunt-jsxdom).
+- **Gulp**: Coming soon.
 
 #### Development
 ##### Wish List
