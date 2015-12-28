@@ -11,6 +11,7 @@ let {
   createElement,
   createTextNode,
   setAttribute,
+  setAttributes,
   addEventListener,
   appendChild,
   appendChildren,
@@ -31,6 +32,14 @@ transformers.JSXAttribute = (node, state) => {
   let transform = name.startsWith('on') ?
     addEventListener(state.name, name.substring(2).toLowerCase(), value) :
     setAttribute(state.name, name, value);
+
+  for(let key in node) delete node[key];
+  for(let key in transform) node[key] = transform[key];
+};
+
+transformers.JSXSpreadAttribute = (node, state) => {
+  let value = node.argument.name;
+  let transform = setAttributes(state.name, value);
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
