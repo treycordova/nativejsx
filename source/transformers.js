@@ -39,7 +39,7 @@ transformers.JSXAttribute = (node, state) => {
 
 transformers.JSXSpreadAttribute = (node, state) => {
   let value = node.argument.name;
-  let transform = setAttributes(state.name, value);
+  let transform = setAttributes(state.name, identifier(value));
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
