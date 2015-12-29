@@ -63,8 +63,8 @@ function template() {
   }();
 }
 ```
-##### IMPORTANT NOTES:
-###### Frontend Dependency
+##### IMPORTANT NOTE:
+###### Frontend Dependencies
 Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes.js`, are **required**.
 Feel free to include them in your build steps (before any jsxdom transpiled code runs, of course).
 ```html
