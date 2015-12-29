@@ -41,7 +41,7 @@ describe('compositions', function() {
     it('builds `hello.setAttributes(world);`', function() {
       assert.equal(
         escodegen.generate(
-          compositions.setAttributes('hello', generators.identifier('world'));
+          compositions.setAttributes('hello', generators.identifier('world'))
         ),
         "hello.setAttributes(world);"
       );
