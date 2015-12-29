@@ -70,7 +70,7 @@ All compilation **requires** node 5.2 or greater _including_ the `--harmony_dest
 $ node --harmony_destructuring my-jsxdom-script.js
 ```
 ###### Frontend Dependency
-Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes`, are **required**.
+Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes.js`, are **required**.
 Feel free to include them in your build steps (before any jsxdom transpiled code runs, of course).
 ```html
 <script type="text/javascript" src="path/to/appendChildren.js"></script>
