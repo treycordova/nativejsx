@@ -1,9 +1,6 @@
 'use strict';
 
-let {
-  next,
-  reset
-} = require('./allocator.js');
+let allocator = require('./allocator.js');
 
 let walkers = {};
 
@@ -17,7 +14,7 @@ walkers.CallExpression = (node, state, c) => {
   if (node.arguments) {
     for(let argument of node.arguments) {
       if (argument.type === 'JSXElement') {
-        c(argument, {name: next(), parent: null});
+        c(argument, {name: allocator.next(), parent: null});
       } else {
         c(argument, state, 'Expression');
       }
@@ -29,7 +26,7 @@ walkers.ReturnStatement = (node, state, c) => {
   if (node.argument) {
     if (node.argument.type === 'JSXElement') {
       c(node.argument, {
-        name: next(),
+        name: allocator.next(),
         parent: null
       });
     } else {
@@ -44,7 +41,7 @@ walkers.VariableDeclarator = (node, state, c) => {
   if (node.init) {
     if (node.init.type === 'JSXElement') {
       c(node.init, {
-        name: next(),
+        name: allocator.next(),
         parent: null
       });
     } else {
@@ -65,7 +62,7 @@ walkers.JSXElement = (node, state, c) => {
 
         if (value.length) {
           c(child, {
-            name: next(),
+            name: allocator.next(),
             parent: state.name
           });
         }
@@ -73,7 +70,7 @@ walkers.JSXElement = (node, state, c) => {
       case 'JSXExpressionContainer':
       case 'JSXElement':
         c(child, {
-          name: next(),
+          name: allocator.next(),
           parent: state.name
         });
         break;
@@ -83,7 +80,7 @@ walkers.JSXElement = (node, state, c) => {
   }
 
   if(state && state.parent === null) {
-    reset();
+    allocator.reset();
   }
 }
 

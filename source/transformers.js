@@ -1,22 +1,7 @@
 'use strict';
 
-let {
-  returns,
-  identifier,
-  literal,
-  closure
-} = require('./generators.js');
-
-let {
-  createElement,
-  createTextNode,
-  setAttribute,
-  setAttributes,
-  addEventListener,
-  appendChild,
-  appendChildren,
-  returnElement
-} = require('./compositions.js');
+let generators = require('./generators.js');
+let compositions = require('./compositions.js');
 
 let transformers = {};
 
@@ -30,8 +15,8 @@ transformers.JSXAttribute = (node, state) => {
     node.value.expression :
     node.value;
   let transform = name.startsWith('on') ?
-    addEventListener(state.name, name.substring(2).toLowerCase(), value) :
-    setAttribute(state.name, name, value);
+    compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value) :
+    compositions.setAttribute(state.name, name, value);
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
@@ -39,7 +24,7 @@ transformers.JSXAttribute = (node, state) => {
 
 transformers.JSXSpreadAttribute = (node, state) => {
   let value = node.argument.name;
-  let transform = setAttributes(state.name, identifier(value));
+  let transform = compositions.setAttributes(state.name, generators.identifier(value));
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
@@ -47,13 +32,13 @@ transformers.JSXSpreadAttribute = (node, state) => {
 
 transformers.JSXElement = (node, state) => {
   let body = [
-    createElement(state.name, node.openingElement.name.name),
+    compositions.createElement(state.name, node.openingElement.name.name),
     ...node.openingElement.attributes
   ];
 
   if (state.parent) {
     node.transform = body.concat(
-      appendChild(state.parent, state.name)
+      compositions.appendChild(state.parent, state.name)
     );
   } else {
     (function flatten(node) {
@@ -63,9 +48,9 @@ transformers.JSXElement = (node, state) => {
       }
     })(node);
 
-    body = closure(
+    body = generators.closure(
       body.concat(
-        returns(identifier(state.name))
+        generators.returns(generators.identifier(state.name))
       )
     );
 
@@ -74,14 +59,14 @@ transformers.JSXElement = (node, state) => {
 };
 
 transformers.JSXExpressionContainer = (node, state) => {
-  node.transform = appendChildren(state.parent, node.expression);
+  node.transform = compositions.appendChildren(state.parent, node.expression);
 };
 
 transformers.Literal = (node, state) => {
   if (state && state.parent && state.name) {
     node.transform = [
-      createTextNode(state.name, literal(node.value)),
-      appendChild(state.parent, state.name)
+      compositions.createTextNode(state.name, generators.literal(node.value)),
+      compositions.appendChild(state.parent, state.name)
     ];
   }
 };

@@ -1,15 +1,6 @@
 'use strict';
 
-let {
-  identifier,
-  literal,
-  variableDeclaration,
-  assigns,
-  member,
-  expressionStatement,
-  callExpression
-} = require('./generators.js')
-
+let generators = require('./generators.js');
 let compositions = {};
 
 /**
@@ -20,17 +11,17 @@ const attributes = { 'className': 'class' };
 const properties = ['required', 'disabled'];
 
 compositions.createElement = (variable, tag) => {
-  return variableDeclaration(
+  return generators.variableDeclaration(
     variable,
-    member('document', 'createElement'),
-    [literal(tag)]
+    generators.member('document', 'createElement'),
+    [generators.literal(tag)]
   );
 };
 
 compositions.createTextNode = (variable, expression) => {
-  return variableDeclaration(
+  return generators.variableDeclaration(
     variable,
-    member('document', 'createTextNode'),
+    generators.member('document', 'createTextNode'),
     [expression]
   );
 };
@@ -40,51 +31,51 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
   let mappedAttribute = attributes[attribute] || attribute;
 
   if (isProperty) {
-    return assigns(
-      member(variable, mappedAttribute),
-      literal(true)
+    return generators.assigns(
+      generators.member(variable, mappedAttribute),
+      generators.literal(true)
     );
   } else {
-    return expressionStatement(
-      callExpression(
-        member(variable, 'setAttribute'),
-        [literal(mappedAttribute), assignmentExpression]
+    return generators.expressionStatement(
+      generators.callExpression(
+        generators.member(variable, 'setAttribute'),
+        [generators.literal(mappedAttribute), assignmentExpression]
       )
     );
   }
 };
 
 compositions.setAttributes = (variable, assignmentExpression) => {
-  return expressionStatement(
-    callExpression(
-      member(variable, 'setAttributes'),
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.member(variable, 'setAttributes'),
       [assignmentExpression]
     )
   );
 };
 
 compositions.addEventListener = (variable, event, expression) => {
-  return expressionStatement(
-    callExpression(
-      member(variable, 'addEventListener'),
-      [literal(event), expression]
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.member(variable, 'addEventListener'),
+      [generators.literal(event), expression]
     )
   );
 };
 
 compositions.appendChild = (parent, child) => {
-  return expressionStatement(
-    callExpression(
-      member(parent, 'appendChild'),
-      [identifier(child)]
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.member(parent, 'appendChild'),
+      [generators.identifier(child)]
     )
   );
 };
 
 compositions.appendChildren = (parent, expression) => {
-  return expressionStatement(
-    callExpression(
-      member(parent, 'appendChildren'),
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.member(parent, 'appendChildren'),
       [expression]
     )
   );
