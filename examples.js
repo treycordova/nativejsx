@@ -3,7 +3,7 @@
 var jsxdom = require('./source/jsxdom');
 
 // Asynchronous, ideal for bulk operations.
-jsxdom.parse('./test/jsx/test.jsx').then(function(byPromise) {
+jsxdom.parse('./test/jsx/test.jsx', {acorn: {ecmaVersion: 6}}).then(function(byPromise) {
   // ==>
   console.log(byPromise);
 });

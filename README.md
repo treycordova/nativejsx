@@ -70,9 +70,11 @@ All compilation **requires** node 5.2 or greater _including_ the `--harmony_dest
 $ node --harmony_destructuring my-jsxdom-script.js
 ```
 ###### Frontend Dependency
-A _very_ tiny JavaScript file located in `dist`, `appendChildren.js`, is **required**.
+Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes`, are **required**.
+Feel free to include them in your build steps (before any jsxdom transpiled code runs, of course).
 ```html
 <script type="text/javascript" src="path/to/appendChildren.js"></script>
+<script type="text/javascript" src="path/to/setAttributes.js"></script>
 ```
 
 #### API
@@ -108,5 +110,7 @@ transpile(/* String: */ jsx) // => String
 
 #### What the heck is `appendChildren`?
 `appendChildren` helps clean up the mess JSXExpressions (the {} things) leave due to JavaScript's lack of static typing. I can't rightly tell if the expressions your fingers conjure up are going to return JSX, literals, or whatever else.
+#### What the heck is `setAttributes`?
+`setAttributes` hands the JSXSpreadAttribute expression that is in the JSX Specification. In other words, `<div {...attributes}></div>`, where `attributes` is an object containing _valid_ HTML attribute names and values, should just work. There isn't a convenient way to do this with native DOM.
 #### Why does it output everything in a closure?
 I'm glad you stuck around to ask. Due to the imperative nature of the native DOM API, we're outputting variable allocations – you know, the "$$a" stuff. To avoid variable clobbering, our DOM goodies are tucked away into a JavaScript closure, safe and sound.

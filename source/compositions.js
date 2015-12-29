@@ -54,6 +54,15 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
   }
 };
 
+compositions.setAttributes = (variable, assignmentExpression) => {
+  return expressionStatement(
+    callExpression(
+      member(variable, 'setAttributes'),
+      [assignmentExpression]
+    )
+  );
+};
+
 compositions.addEventListener = (variable, event, expression) => {
   return expressionStatement(
     callExpression(

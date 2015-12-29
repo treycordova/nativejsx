@@ -91,6 +91,7 @@ walkers.JSXExpressionContainer = (node, state, c) => {
   c(node.expression, state);
 };
 
-walkers.JSXAttribute = function() {};
+walkers.JSXSpreadAttribute = () => {};
+walkers.JSXAttribute = () => {};
 
 module.exports = walkers;
