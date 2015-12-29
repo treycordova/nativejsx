@@ -32,7 +32,7 @@ jsxdom.parse('dat-btn-group.js', {
 });
 
 ```
-That `console.log` hussles to show you the amazing native DOM API output.
+That `console.log` reveals the amazing native DOM API output:
 ```javascript
 function template() {
   return function () {
