@@ -17,7 +17,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --harmony",
     "build": "node --harmony_destructuring .",
-    "postinstall": "./node_modules/.bin/babel source -d dist"
+    "postinstall": "./node_modules/.bin/babel source -d dist --presets es2015"
   },
   "repository": {
     "type": "git",
