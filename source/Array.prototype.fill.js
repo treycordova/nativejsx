@@ -1,7 +1,6 @@
 if (![].fill)  {
-  Array.prototype.fill = value => {
-    let O = Object(this),
-        len = parseInt(O.length, 10),
+  Array.prototype.fill = function(value) {
+    let len = parseInt(this.length, 10),
         start = arguments[1],
         relativeStart = parseInt(start, 10) || 0,
         k = relativeStart < 0 ?
@@ -11,8 +10,8 @@ if (![].fill)  {
         final = relativeEnd < 0 ?
             Math.max(len + relativeEnd, 0) : Math.min(relativeEnd, len);
     for (; k < final; k++) {
-        O[k] = value;
+        this[k] = value;
     }
-    return O;
+    return this;
   };
 }
