@@ -316,5 +316,7 @@ local.properties
 
 
 ### Custom ###
-dist
+dist/**
+!dist/appendChildren.js
+!dist/setAttributes.js
 npm-shrinkwrap.json
