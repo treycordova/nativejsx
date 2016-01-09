@@ -2,8 +2,8 @@
 
 let assert = require('chai').assert;
 let escodegen = require('escodegen');
-let generators = require('../source/generators.js');
-let compositions = require('../source/compositions.js');
+let generators = require('../dist/generators.js');
+let compositions = require('../dist/compositions.js');
 
 describe('compositions', function() {
   describe('createElement', function() {

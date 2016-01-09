@@ -2,7 +2,7 @@
 
 let assert = require('chai').assert;
 let escodegen = require('escodegen');
-let generators = require('../source/generators.js');
+let generators = require('../dist/generators.js');
 
 describe('generators', function() {
   describe('identifier', function() {

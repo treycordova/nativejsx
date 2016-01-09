@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('chai').assert;
-let allocator = require('../source/allocator.js');
+let allocator = require('../dist/allocator.js');
 
 function allocate(amount) {
   let allocations = [];

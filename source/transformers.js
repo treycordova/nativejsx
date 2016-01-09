@@ -14,7 +14,7 @@ transformers.JSXAttribute = (node, state) => {
   let value = node.value.expression ?
     node.value.expression :
     node.value;
-  let transform = name.startsWith('on') ?
+  let transform = /^on/.test(name) ?
     compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value) :
     compositions.setAttribute(state.name, name, value);
 

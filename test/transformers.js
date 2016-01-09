@@ -1,8 +1,8 @@
 'use strict';
 
 let assert = require('chai').assert;
-let transformers = require('../source/transformers.js');
-let generators = require('../source/generators.js');
+let transformers = require('../dist/transformers.js');
+let generators = require('../dist/generators.js');
 
 describe('transformers', function() {
   describe('JSXAttribute', function() {
