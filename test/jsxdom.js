@@ -2,7 +2,7 @@
 
 let fs = require('fs');
 let assert = require('chai').assert;
-let jsxdom = require('../source/jsxdom');
+let jsxdom = require('../dist/jsxdom');
 
 const compiled = [
   'var hello = function () {',

@@ -2,9 +2,9 @@
 
 let assert = require('chai').assert;
 let sinon = require('sinon');
-let walkers = require('../source/walkers.js');
-let generators = require('../source/generators.js');
-let allocator = require('../source/allocator.js');
+let walkers = require('../dist/walkers.js');
+let generators = require('../dist/generators.js');
+let allocator = require('../dist/allocator.js');
 
 describe('walkers', function() {
   afterEach(function() {
