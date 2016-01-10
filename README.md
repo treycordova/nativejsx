@@ -1,6 +1,6 @@
 ## jsxdom [![Build Status](https://travis-ci.org/treycordova/jsxdom.svg?branch=master)](https://travis-ci.org/treycordova/jsxdom) [![Version Status](https://img.shields.io/npm/v/jsxdom.svg)](https://www.npmjs.org/package/jsxdom)
 #### JSX to native DOM API transpilation.
-Want all the goodness of JSX without the React dependency?
+Want all the goodness of JSX _without_ the Babel and React dependencies?
 **Wait**, not quite _all_ of the goodness, but a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
 
 I know. "Why all the words?" Just show you something.
@@ -63,7 +63,12 @@ function template() {
   }();
 }
 ```
-##### IMPORTANT NOTE:
+
+##### IMPORTANT NOTES:
+###### Tested Node Versions
+- 4.2.4
+- 5.2 - 5.4
+
 ###### Frontend Dependencies
 Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes.js`, are **required**.
 Feel free to include them in your build steps (before any jsxdom transpiled code runs, of course).

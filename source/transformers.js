@@ -33,8 +33,7 @@ transformers.JSXSpreadAttribute = (node, state) => {
 transformers.JSXElement = (node, state) => {
   let body = [
     compositions.createElement(state.name, node.openingElement.name.name),
-    ...node.openingElement.attributes
-  ];
+  ].concat(node.openingElement.attributes);
 
   if (state.parent) {
     node.transform = body.concat(
