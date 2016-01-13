@@ -17,7 +17,8 @@ const defaults = {
   acorn: {
     plugins: {
       jsx: true
-    }
+    },
+    ecmaVersion: 6
   }
 };
 
