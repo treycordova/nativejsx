@@ -51,6 +51,141 @@ describe('walkers', function() {
     });
   });
 
+  describe('ConditionalExpression', function() {
+    let node;
+    let state;
+    let recursiveCall;
+
+    beforeEach(function() {
+      node = {consequent: 'consequent', alternate: 'alternate'};
+      state = 'state';
+      recursiveCall = sinon.spy();
+    });
+
+    it('walks `consequent` and `alternate', function() {
+      walkers.ConditionalExpression(node, state, recursiveCall);
+
+      assert.isTrue(recursiveCall.calledTwice);
+      assert.isTrue(recursiveCall.calledWith(node.consequent, state, 'Expression'));
+      assert.isTrue(recursiveCall.calledWith(node.alternate, state, 'Expression'));
+    });
+
+    describe('when `consequent` is a JSXElement', function() {
+      it('walks `consequent` with initialized state', function() {
+        node.consequent = {type: 'JSXElement'};
+        walkers.ConditionalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.consequent,
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+
+    describe('when `consequent` is a JSXElement', function() {
+      it('walks `consequent` with initialized state', function() {
+        node.alternate = {type: 'JSXElement'};
+        walkers.ConditionalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.alternate,
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+
+    describe('when `consequent` is a null Literal', function() {
+      it('injects a JSXElement of <noscript> in the null\'s place', function() {
+        node.consequent = {type: 'Literal', value: null};
+        walkers.ConditionalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            generators.jsxelement('noscript'),
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+
+    describe('when `alternate` is a null Literal', function() {
+      it('injects a JSXElement of <noscript> in the null\'s place', function() {
+        node.alternate = {type: 'Literal', value: null};
+        walkers.ConditionalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            generators.jsxelement('noscript'),
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+  });
+
+  describe('LogicalExpression', function() {
+    let node;
+    let state;
+    let recursiveCall;
+
+    beforeEach(function() {
+      node = {left: 'left', right: 'right'};
+      state = 'state';
+      recursiveCall = sinon.spy();
+    });
+
+    it('walks `left` and `right`', function() {
+      walkers.LogicalExpression(node, state, recursiveCall);
+      assert.isTrue(recursiveCall.calledTwice);
+      assert.isTrue(
+        recursiveCall.calledWith(
+          'left',
+          state,
+          'Expression'
+        )
+      );
+      assert.isTrue(
+        recursiveCall.calledWith(
+          'right',
+          state,
+          'Expression'
+        )
+      );
+    });
+
+    describe('when `left` is a JSXElement', function() {
+      it('walks `left` with initialized state', function() {
+        node.left = {type: 'JSXElement'};
+        walkers.LogicalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.left,
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+
+    describe('when `right` is a JSXElement', function() {
+      it('walks `right` with initialized state', function() {
+        node.right = {type: 'JSXElement'};
+        walkers.LogicalExpression(node, state, recursiveCall);
+        assert.isTrue(recursiveCall.called);
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.right,
+            {name: '$$a', parent: null}
+          )
+        );
+      });
+    });
+  });
+
   describe('ReturnStatement', function() {
     let node;
     let state;
@@ -70,7 +205,7 @@ describe('walkers', function() {
     });
 
     describe('when `argument` is a JSXElement', function() {
-      it('walks `argument with initialized state', function() {
+      it('walks `argument` with initialized state', function() {
         node.argument = {type: 'JSXElement'};
         walkers.ReturnStatement(node, state, recursiveCall);
         assert.isTrue(recursiveCall.called);

@@ -1,6 +1,7 @@
 'use strict';
 
 let allocator = require('./allocator.js');
+let generators = require('./generators.js');
 
 let walkers = {};
 
@@ -18,6 +19,32 @@ walkers.CallExpression = (node, state, c) => {
       } else {
         c(argument, state, 'Expression');
       }
+    }
+  }
+};
+
+walkers.ConditionalExpression = (node, state, c) => {
+  for (let branch of [node.consequent, node.alternate]) {
+    if (branch.type === 'Literal' && branch.value === null) {
+      let jsx = generators.jsxelement('noscript')
+      for (let key in branch) delete branch[key];
+      for (let key in jsx) branch[key] = jsx[key];
+    }
+
+    if (branch.type === 'JSXElement') {
+      c(branch, {name: allocator.next(), parent: null});
+    } else {
+      c(branch, state, 'Expression');
+    }
+  }
+};
+
+walkers.LogicalExpression = (node, state, c) => {
+  for (let branch of [node.left, node.right]) {
+    if (branch.type === 'JSXElement') {
+      c(branch, {name: allocator.next(), parent: null});
+    } else {
+      c(branch, state, 'Expression');
     }
   }
 };

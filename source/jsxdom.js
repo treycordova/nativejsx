@@ -68,6 +68,7 @@ let transpile = jsxdom.transpile = (jsx, options) => {
     generators.DECLARATION_TYPE;
 
   let ast = acorn.parse(jsx, safe.acorn);
+  console.log(util.inspect(ast, {depth: null}));
   walk.simple(ast, transformers, walker);
   return escodegen.generate(ast);
 };

@@ -89,4 +89,36 @@ let closure = generators.closure = (body) => {
   });
 }
 
+let jsxidentifier = generators.jsxidentifier = (name) => {
+  return {
+    type: 'JSXIdentifier',
+    name
+  };
+};
+
+let jsxelement = generators.jsxelement = (name, attributes, children) => {
+  let hasChildren = Array.isArray(children) && children.length;
+  let hasAttributes = Array.isArray(attributes) && attributes.length;
+
+  let element = {
+    type: 'JSXElement',
+    openingElement: {
+      type: 'JSXOpeningElement',
+      attributes: hasAttributes ? attributes : [],
+      name: jsxidentifier(name),
+      selfClosing: !hasChildren
+    },
+    children: hasChildren ? children : []
+  };
+
+  if (hasChildren) {
+    element.closingElement = {
+      type: 'JSXClosingElement',
+      name: jsxidentifier(name)
+    };
+  }
+
+  return element;
+};
+
 module.exports = generators;
