@@ -92,11 +92,11 @@ transformers.JSXExpressionContainer = (node, state) => {
   if (transformers.INLINE_JSXDOM_HELPERS) {
     usingAppendChildren = true;
     node.transform = compositions.appendChildrenInline([
-      generators.identifier(state.name),
+      generators.identifier(state.parent),
       node.expression
     ]);
   } else {
-    node.transform = compositions.appendChildren(state.name, node.expression);
+    node.transform = compositions.appendChildren(state.parent, node.expression);
   }
 };
 
