@@ -67,7 +67,7 @@ function template() {
 ##### IMPORTANT NOTES:
 ###### Tested Node Versions
 - 4.2.4
-- 5.2 - 5.4
+- 5.2 - 5.5
 
 ###### Frontend Dependencies
 One _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`, is **required**.
