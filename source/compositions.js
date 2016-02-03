@@ -54,6 +54,13 @@ compositions.setAttributes = (variable, assignmentExpression) => {
   );
 };
 
+compositions.setAttributesInline = (variable, varargs) => {
+  return generators.callExpression(
+    generators.identifier('setAttributes'),
+    varargs || []
+  );
+};
+
 compositions.addEventListener = (variable, event, expression) => {
   return generators.expressionStatement(
     generators.callExpression(
@@ -77,6 +84,15 @@ compositions.appendChildren = (parent, expression) => {
     generators.callExpression(
       generators.member(parent, 'appendChildren'),
       [expression]
+    )
+  );
+};
+
+compositions.appendChildrenInline = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('appendChildren'),
+      varargs || []
     )
   );
 };

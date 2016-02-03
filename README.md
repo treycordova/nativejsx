@@ -70,13 +70,17 @@ function template() {
 - 5.2 - 5.5
 
 ###### Frontend Dependencies
-One _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`, is **required**.
+You have two choices:
+
+1. Use a _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`.
 Feel free to include it in your build steps (before any jsxdom-transpiled code runs, of course).
 ```html
 <script type="text/javascript" src="path/to/jsxdom-prototype.js"></script>
 // or the minified version
 <script type="text/javascript" src="path/to/jsxdom-prototype.min.js"></script>
 ```
+
+2. Enable inline usage with the API option, `prototypes: 'inline'`. **Warning**: this places `setAttributes` and `appendChildren` in every closure that they are needed.
 
 #### API
 ```javascript
@@ -90,6 +94,7 @@ transpile(jsx)
 ##### Options
 - **declarationType**: Either `var` (default) or `let`.
 - **variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
+- **prototypes**: Either `true` (default) or `'inline'`.
 - **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}, ecmaVersion: 6}`.
 
 #### Build Tools

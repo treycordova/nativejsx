@@ -2,8 +2,14 @@
 
 let generators = require('./generators.js');
 let compositions = require('./compositions.js');
+let walk = require('acorn/dist/walk');
 
-let transformers = {};
+let usingSetAttributes = false;
+let usingAppendChildren = false;
+
+let transformers = {
+  INLINE_JSXDOM_HELPERS: false
+};
 
 /**
  * JSX to DOM transformers
@@ -23,8 +29,17 @@ transformers.JSXAttribute = (node, state) => {
 };
 
 transformers.JSXSpreadAttribute = (node, state) => {
+  let transform;
   let value = node.argument.name;
-  let transform = compositions.setAttributes(state.name, generators.identifier(value));
+  if (transformers.INLINE_JSXDOM_HELPERS) {
+    usingSetAttributes = true;
+    transform = compositions.setAttributesInline([
+      generators.identifier(state.name),
+      generators.identifier(value)
+    ]);
+  } else {
+    transform = compositions.setAttributes(state.name, generators.identifier(value));
+  }
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
@@ -53,12 +68,36 @@ transformers.JSXElement = (node, state) => {
       )
     );
 
+    if (transformers.INLINE_JSXDOM_HELPERS) {
+      if (usingSetAttributes) {
+        body.callee.body.body = [
+          require('./prototypal-helpers/setAttributes.ast.json')
+        ].concat(body.callee.body.body);
+      }
+
+      if (usingAppendChildren) {
+        body.callee.body.body = [
+          require('./prototypal-helpers/appendChildren.ast.json')
+        ].concat(body.callee.body.body);
+      }
+    }
+
+    usingSetAttributes = usingAppendChildren = false;
+
     for (let key in body) node[key] = body[key];
   }
 };
 
 transformers.JSXExpressionContainer = (node, state) => {
-  node.transform = compositions.appendChildren(state.parent, node.expression);
+  if (transformers.INLINE_JSXDOM_HELPERS) {
+    usingAppendChildren = true;
+    node.transform = compositions.appendChildrenInline([
+      generators.identifier(state.name),
+      node.expression
+    ]);
+  } else {
+    node.transform = compositions.appendChildren(state.name, node.expression);
+  }
 };
 
 transformers.Literal = (node, state) => {

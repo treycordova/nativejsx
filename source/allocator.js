@@ -5,9 +5,9 @@ const ALPHABET_LENGTH = ALPHABET.length;
 
 let variableIndex = 0;
 
-let allocator = {};
-
-allocator.VARIABLE_PREFIX = '$$';
+let allocator = {
+  VARIABLE_PREFIX: '$$'
+};
 
 allocator.next = () => {
   let repetition = Math.ceil(variableIndex / ALPHABET_LENGTH);

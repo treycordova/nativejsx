@@ -14,6 +14,7 @@ const defaults = {
   encoding: 'utf-8',
   variablePrefix: '$$',
   declarationType: 'var',
+  prototypes: true,
   acorn: {
     plugins: {
       jsx: true
@@ -66,6 +67,8 @@ let transpile = jsxdom.transpile = (jsx, options) => {
   generators.DECLARATION_TYPE = isValidDeclarationType ?
     safe.declarationType :
     generators.DECLARATION_TYPE;
+
+  transformers.INLINE_JSXDOM_HELPERS = safe.prototypes === 'inline' ? true : false;
 
   let ast = acorn.parse(jsx, safe.acorn);
   walk.simple(ast, transformers, walker);

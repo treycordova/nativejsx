@@ -77,16 +77,22 @@ let returns = generators.returns = (argument) => {
   };
 }
 
-let closure = generators.closure = (body) => {
-  return callExpression({
+let functionExpression = generators.functionExpression = (id, params, body) => {
+  return {
     type: 'FunctionExpression',
-    id: null,
-    params: [],
+    id: id ? identifier(id) : null,
+    params: params,
     body: {
       type: 'BlockStatement',
       body
     }
-  });
+  };
+};
+
+let closure = generators.closure = (body) => {
+  return callExpression(
+    functionExpression(null, [], body)
+  );
 }
 
 let jsxidentifier = generators.jsxidentifier = (name) => {
