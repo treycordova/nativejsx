@@ -74,11 +74,12 @@ You have two choices:
 
 1. Use a _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`.
 Feel free to include it in your build steps (before any jsxdom-transpiled code runs, of course).
-```html
-<script type="text/javascript" src="path/to/jsxdom-prototype.js"></script>
-// or the minified version
-<script type="text/javascript" src="path/to/jsxdom-prototype.min.js"></script>
-```
+
+  ```html
+  <script type="text/javascript" src="path/to/jsxdom-prototype.js"></script>
+  // or the minified version
+  <script type="text/javascript" src="path/to/jsxdom-prototype.min.js"></script>
+  ```
 
 2. Enable inline usage with the API option, `prototypes: 'inline'`. **Warning**: this places `setAttributes` and `appendChildren` in every closure that they are needed.
 
