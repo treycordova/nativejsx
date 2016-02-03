@@ -70,11 +70,12 @@ function template() {
 - 5.2 - 5.4
 
 ###### Frontend Dependencies
-Two _very_ tiny JavaScript files located in `dist`, `appendChildren.js` and `setAttributes.js`, are **required**.
-Feel free to include them in your build steps (before any jsxdom transpiled code runs, of course).
+One _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`, is **required**.
+Feel free to include it in your build steps (before any jsxdom-transpiled code runs, of course).
 ```html
-<script type="text/javascript" src="path/to/appendChildren.js"></script>
-<script type="text/javascript" src="path/to/setAttributes.js"></script>
+<script type="text/javascript" src="path/to/jsxdom-prototype.js"></script>
+// or the minified version
+<script type="text/javascript" src="path/to/jsxdom-prototype.min.js"></script>
 ```
 
 #### API
