@@ -1,8 +1,8 @@
 {
-  "name": "jsxdom",
+  "name": "nativejsx",
   "version": "2.4.0",
   "description": "JSX to native DOM API transpilation.",
-  "main": "source/jsxdom.js",
+  "main": "source/nativejsx.js",
   "dependencies": {
     "acorn": "^2.6.4",
     "acorn-jsx": "^2.0.1",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/treycordova/jsxdom.git"
+    "url": "git+https://github.com/treycordova/nativejsx.git"
   },
   "keywords": [
     "jsx",
@@ -41,7 +41,7 @@
   "author": "Trey Cordova",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/treycordova/jsxdom/issues"
+    "url": "https://github.com/treycordova/nativejsx/issues"
   },
-  "homepage": "https://github.com/treycordova/jsxdom#readme"
+  "homepage": "https://github.com/treycordova/nativejsx#readme"
 }

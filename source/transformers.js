@@ -8,7 +8,7 @@ let usingSetAttributes = false;
 let usingAppendChildren = false;
 
 let transformers = {
-  INLINE_JSXDOM_HELPERS: false
+  INLINE_NATIVEJSX_HELPERS: false
 };
 
 /**
@@ -32,7 +32,7 @@ transformers.JSXSpreadAttribute = (node, state) => {
   let transform;
   let value = node.argument.name;
 
-  if (transformers.INLINE_JSXDOM_HELPERS) {
+  if (transformers.INLINE_NATIVEJSX_HELPERS) {
     transform = compositions.setAttributesInline([
       generators.identifier(state.name),
       generators.identifier(value)
@@ -76,7 +76,7 @@ transformers.JSXElement = (node, state) => {
 };
 
 transformers.JSXExpressionContainer = (node, state) => {
-  if (transformers.INLINE_JSXDOM_HELPERS) {
+  if (transformers.INLINE_NATIVEJSX_HELPERS) {
     node.transform = compositions.appendChildrenInline([
       generators.identifier(state.parent),
       node.expression

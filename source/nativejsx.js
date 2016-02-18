@@ -8,7 +8,7 @@ let escodegen = require('escodegen');
 let acorn = require('acorn-jsx');
 let walk = require('acorn/dist/walk');
 
-let jsxdom = {};
+let nativejsx = {};
 
 const defaults = {
   encoding: 'utf-8',
@@ -23,10 +23,10 @@ const defaults = {
   }
 };
 
-let allocator = jsxdom.allocator = require('./allocator.js');
-let generators = jsxdom.generators = require('./generators.js');
-let walker = jsxdom.walker = walk.make(require('./walkers.js'));
-let transformers = jsxdom.transformers = require('./transformers.js');
+let allocator = nativejsx.allocator = require('./allocator.js');
+let generators = nativejsx.generators = require('./generators.js');
+let walker = nativejsx.walker = walk.make(require('./walkers.js'));
+let transformers = nativejsx.transformers = require('./transformers.js');
 let safeOptions = (options) => {
   let copy = merge(
     {},
@@ -54,7 +54,7 @@ let safeOptions = (options) => {
  * @param {JSXOptions} options - User-defined compilation options.
  * @returns {String} - A String representing JSX transpiled to JavaScript.
  */
-let transpile = jsxdom.transpile = (jsx, options) => {
+let transpile = nativejsx.transpile = (jsx, options) => {
   let safe = safeOptions(options);
   let isValidDeclarationType = generators.
     ALLOWABLE_DECLARATION_TYPES.
@@ -68,12 +68,12 @@ let transpile = jsxdom.transpile = (jsx, options) => {
     safe.declarationType :
     generators.DECLARATION_TYPE;
 
-  transformers.INLINE_JSXDOM_HELPERS = safe.prototypes === 'inline';
+  transformers.INLINE_NATIVEJSX_HELPERS = safe.prototypes === 'inline';
 
   let ast = acorn.parse(jsx, safe.acorn);
   walk.simple(ast, transformers, walker);
 
-  if (transformers.INLINE_JSXDOM_HELPERS) {
+  if (transformers.INLINE_NATIVEJSX_HELPERS) {
     ast.body = [
       require('./prototypal-helpers/setAttributes.ast.json'),
       require('./prototypal-helpers/appendChildren.ast.json'),
@@ -85,14 +85,14 @@ let transpile = jsxdom.transpile = (jsx, options) => {
 /**
  * @function parse
  * @description
- * Transforms the JSX AST by reading the specified file and using jsxdom to
+ * Transforms the JSX AST by reading the specified file and using nativejsx to
  * transpile it to valid JavaScript. This function operates asynchronously
  * and resolves through the Promise API.
  * @param {String} file - A path to and including the JSX file.
  * @param {JSXOptions} options - User-defined compilation options.
  * @returns {Promise} - A Promise that resolves when the file is read and transpiled.
  */
-jsxdom.parse = (file, options) => {
+nativejsx.parse = (file, options) => {
   let safe = safeOptions(options);
 
   return new Promise((resolve, reject) => {
@@ -106,14 +106,14 @@ jsxdom.parse = (file, options) => {
 /**
  * @function parseSync
  * @description
- * Transforms the JSX AST by reading the specified file and using jsxdom to
+ * Transforms the JSX AST by reading the specified file and using nativejsx to
  * transpile it to valid JavaScript. This function operates synchronously
  * (much like readFileSync in node.js).
  * @param {String} file - A path to and including the JSX file.
  * @param {JSXOptions} options - User-defined compilation options.
  * @returns {String} - A String containing valid JavaScript.
  */
-jsxdom.parseSync = (file, options) => {
+nativejsx.parseSync = (file, options) => {
   let safe = safeOptions(options);
 
   return transpile(
@@ -122,4 +122,4 @@ jsxdom.parseSync = (file, options) => {
   );
 };
 
-module.exports = jsxdom;
+module.exports = nativejsx;

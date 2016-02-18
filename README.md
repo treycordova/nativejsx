@@ -1,4 +1,4 @@
-## jsxdom [![Build Status](https://travis-ci.org/treycordova/jsxdom.svg?branch=master)](https://travis-ci.org/treycordova/jsxdom) [![Version Status](https://img.shields.io/npm/v/jsxdom.svg)](https://www.npmjs.org/package/jsxdom)
+## nativejsx [![Build Status](https://travis-ci.org/treycordova/nativejsx.svg?branch=master)](https://travis-ci.org/treycordova/nativejsx) [![Version Status](https://img.shields.io/npm/v/nativejsx.svg)](https://www.npmjs.org/package/nativejsx)
 #### JSX to native DOM API transpilation.
 Want all the goodness of JSX _without_ the Babel and React dependencies?
 **Wait**, not quite _all_ of the goodness, but a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
@@ -20,11 +20,11 @@ function template() {
 }
 ```
 That looks sexy, right? Yeah.
-Now we bake it in `jsxdom` using `jsxdom.parse`:
+Now we bake it in `nativejsx` using `nativejsx.parse`:
 ```javascript
-var jsxdom = require('jsxdom');
+var nativejsx = require('nativejsx');
 
-jsxdom.parse('dat-btn-group.js', {
+nativejsx.parse('dat-btn-group.js', {
   declarationType: 'var',
   variablePrefix: '$$'
 }).then(function(transpiledGoodness) {
@@ -72,13 +72,13 @@ function template() {
 ###### Frontend Dependencies
 You have two choices:
 
-1. Use a _very_ tiny JavaScript file located in `dist`, `jsxdom-prototype.js`.
-Feel free to include it in your build steps (before any jsxdom-transpiled code runs, of course).
+1. Use a _very_ tiny JavaScript file located in `dist`, `nativejsx-prototype.js`.
+Feel free to include it in your build steps (before any nativejsx-transpiled code runs, of course).
 
   ```html
-  <script type="text/javascript" src="path/to/jsxdom-prototype.js"></script>
+  <script type="text/javascript" src="path/to/nativejsx-prototype.js"></script>
   // or the minified version
-  <script type="text/javascript" src="path/to/jsxdom-prototype.min.js"></script>
+  <script type="text/javascript" src="path/to/nativejsx-prototype.min.js"></script>
   ```
 
 2. Enable inline usage with the API option, `prototypes: 'inline'`. **Warning**: this places `setAttributes` and `appendChildren` in every closure that they are needed.
@@ -99,9 +99,9 @@ transpile(jsx)
 - **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}, ecmaVersion: 6}`.
 
 #### Build Tools
-- **Webpack**: [jsxdom-loader](https://github.com/treycordova/jsxdom-loader).
-- **Grunt**: [grunt-jsxdom](https://github.com/treycordova/grunt-jsxdom).
-- **Gulp**: [gulp-jsxdom](https://github.com/treycordova/gulp-jsxdom).
+- **Webpack**: [nativejsx-loader](https://github.com/treycordova/nativejsx-loader).
+- **Grunt**: [grunt-nativejsx](https://github.com/treycordova/grunt-nativejsx).
+- **Gulp**: [gulp-nativejsx](https://github.com/treycordova/gulp-nativejsx).
 
 #### Development
 ##### Wish List

@@ -2,7 +2,7 @@
 
 let fs = require('fs');
 let assert = require('chai').assert;
-let jsxdom = require('../source/jsxdom');
+let nativejsx = require('../source/nativejsx');
 
 const compiled = [
   'var hello = function () {',
@@ -11,9 +11,9 @@ const compiled = [
   '}();'
 ].join('\n')
 
-describe('jsxdom', function() {
+describe('nativejsx', function() {
   beforeEach(function() {
-    jsxdom.allocator.reset();
+    nativejsx.allocator.reset();
   });
 
   describe('transpile', function() {
@@ -25,13 +25,13 @@ describe('jsxdom', function() {
 
     it('returns a String', function() {
       assert.isString(
-        jsxdom.transpile(source)
+        nativejsx.transpile(source)
       );
     });
 
     it('returns a transpiled String', function() {
       assert.equal(
-        jsxdom.transpile(source),
+        nativejsx.transpile(source),
         compiled
       );
     });
@@ -39,11 +39,11 @@ describe('jsxdom', function() {
 
   describe('parse', function() {
     it('returns a Promise', function() {
-      assert.instanceOf(jsxdom.parse('test.jsx'), Promise);
+      assert.instanceOf(nativejsx.parse('test.jsx'), Promise);
     });
 
     it('resolves the promise with a transpiled String', function(done) {
-      jsxdom.parse('./test/jsx/test.jsx').then(function(javascript) {
+      nativejsx.parse('./test/jsx/test.jsx').then(function(javascript) {
         assert.equal(javascript, compiled);
         done();
       }, function() {
@@ -60,7 +60,7 @@ describe('jsxdom', function() {
       };
 
       it('doesn\'t mutate the options passed in as an argument', function() {
-        jsxdom.parse('./test/jsx/test.jsx', options);
+        nativejsx.parse('./test/jsx/test.jsx', options);
 
         assert.deepEqual(options, {
           variablePrefix: '__',
@@ -70,7 +70,7 @@ describe('jsxdom', function() {
 
       it('outputs transpiled source with __ variable prefixes', function() {
         assert.match(
-          jsxdom.parseSync('./test/jsx/test.jsx', options),
+          nativejsx.parseSync('./test/jsx/test.jsx', options),
           /var __a/
         );
       });
@@ -79,7 +79,7 @@ describe('jsxdom', function() {
         options.declarationType = 'let';
 
         assert.match(
-          jsxdom.parseSync('./test/jsx/test.jsx', options),
+          nativejsx.parseSync('./test/jsx/test.jsx', options),
           /let __a/
         );
       });
@@ -88,12 +88,12 @@ describe('jsxdom', function() {
 
   describe('parseSync', function() {
     it('returns a String', function() {
-      assert.isString(jsxdom.parseSync('./test/jsx/test.jsx'));
+      assert.isString(nativejsx.parseSync('./test/jsx/test.jsx'));
     });
 
     it('returns a transpiled String', function() {
       assert.equal(
-        jsxdom.parseSync('./test/jsx/test.jsx'),
+        nativejsx.parseSync('./test/jsx/test.jsx'),
         compiled
       );
     });

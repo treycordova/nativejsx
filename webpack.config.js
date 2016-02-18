@@ -2,8 +2,8 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    'jsxdom-prototypes': './source/prototypal-helpers/index.js',
-    'jsxdom-prototypes.min': './source/prototypal-helpers/index.js'
+    'nativejsx-prototypes': './source/prototypal-helpers/index.js',
+    'nativejsx-prototypes.min': './source/prototypal-helpers/index.js'
   },
   output: {
     path: './dist',

@@ -1,19 +1,19 @@
 'use strict';
 
-var jsxdom = require('./source/jsxdom');
+var nativejsx = require('./source/nativejsx');
 
 // Asynchronous, ideal for bulk operations.
-jsxdom.parse('./test/jsx/test.jsx', {acorn: {ecmaVersion: 6}}).then(function(byPromise) {
+nativejsx.parse('./test/jsx/test.jsx', {acorn: {ecmaVersion: 6}}).then(function(byPromise) {
   // ==>
   console.log(byPromise);
 });
 
 // OR Synchronous, for callback and promise naysayers :).
-let bySync = jsxdom.parseSync('./test/jsx/node-expressions.jsx', {prototypes: 'inline'});
+let bySync = nativejsx.parseSync('./test/jsx/node-expressions.jsx', {prototypes: 'inline'});
 // ==>
 console.log(bySync);
 
 // OR We must go deeper.
-let byString = jsxdom.transpile('var something = <div></div>;');
+let byString = nativejsx.transpile('var something = <div></div>;');
 // ==>
 console.log(byString);
