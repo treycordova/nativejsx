@@ -31,14 +31,17 @@ transformers.JSXAttribute = (node, state) => {
 transformers.JSXSpreadAttribute = (node, state) => {
   let transform;
   let value = node.argument.name;
+
   if (transformers.INLINE_JSXDOM_HELPERS) {
-    usingSetAttributes = true;
     transform = compositions.setAttributesInline([
       generators.identifier(state.name),
       generators.identifier(value)
     ]);
   } else {
-    transform = compositions.setAttributes(state.name, generators.identifier(value));
+    transform = compositions.setAttributes(
+      state.name,
+      generators.identifier(value)
+    );
   }
 
   for(let key in node) delete node[key];
@@ -68,35 +71,21 @@ transformers.JSXElement = (node, state) => {
       )
     );
 
-    if (transformers.INLINE_JSXDOM_HELPERS) {
-      if (usingSetAttributes) {
-        body.callee.body.body = [
-          require('./prototypal-helpers/setAttributes.ast.json')
-        ].concat(body.callee.body.body);
-      }
-
-      if (usingAppendChildren) {
-        body.callee.body.body = [
-          require('./prototypal-helpers/appendChildren.ast.json')
-        ].concat(body.callee.body.body);
-      }
-    }
-
-    usingSetAttributes = usingAppendChildren = false;
-
     for (let key in body) node[key] = body[key];
   }
 };
 
 transformers.JSXExpressionContainer = (node, state) => {
   if (transformers.INLINE_JSXDOM_HELPERS) {
-    usingAppendChildren = true;
     node.transform = compositions.appendChildrenInline([
       generators.identifier(state.parent),
       node.expression
     ]);
   } else {
-    node.transform = compositions.appendChildren(state.parent, node.expression);
+    node.transform = compositions.appendChildren(
+      state.parent,
+      node.expression
+    );
   }
 };
 

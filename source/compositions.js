@@ -56,7 +56,7 @@ compositions.setAttributes = (variable, assignmentExpression) => {
 
 compositions.setAttributesInline = (variable, varargs) => {
   return generators.callExpression(
-    generators.identifier('setAttributes'),
+    generators.identifier('__setAttributes'),
     varargs || []
   );
 };
@@ -91,7 +91,7 @@ compositions.appendChildren = (parent, expression) => {
 compositions.appendChildrenInline = (varargs) => {
   return generators.expressionStatement(
     generators.callExpression(
-      generators.identifier('appendChildren'),
+      generators.identifier('__appendChildren'),
       varargs || []
     )
   );

@@ -68,10 +68,17 @@ let transpile = jsxdom.transpile = (jsx, options) => {
     safe.declarationType :
     generators.DECLARATION_TYPE;
 
-  transformers.INLINE_JSXDOM_HELPERS = safe.prototypes === 'inline' ? true : false;
+  transformers.INLINE_JSXDOM_HELPERS = safe.prototypes === 'inline';
 
   let ast = acorn.parse(jsx, safe.acorn);
   walk.simple(ast, transformers, walker);
+
+  if (transformers.INLINE_JSXDOM_HELPERS) {
+    ast.body = [
+      require('./prototypal-helpers/setAttributes.ast.json'),
+      require('./prototypal-helpers/appendChildren.ast.json'),
+    ].concat(ast.body);
+  }
   return escodegen.generate(ast);
 };
 
