@@ -81,7 +81,7 @@ Feel free to include it in your build steps (before any nativejsx-transpiled cod
   <script type="text/javascript" src="path/to/nativejsx-prototype.min.js"></script>
   ```
 
-2. Enable inline usage with the API option, `prototypes: 'inline'`. **Warning**: this places `setAttributes` and `appendChildren` in every closure that they are needed.
+2. Enable inline usage with the API option, `prototypes: 'inline'`. **Warning**: this places `setAttributes` and `appendChildren` in every file that they are needed.
 
 #### API
 ```javascript
