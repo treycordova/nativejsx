@@ -60,6 +60,7 @@ let transpile = nativejsx.transpile = (jsx, options) => {
     ALLOWABLE_DECLARATION_TYPES.
     indexOf(safe.declarationType) !== -1;
 
+  allocator.reset();
   allocator.VARIABLE_PREFIX = typeof safe.variablePrefix === 'string' ?
     safe.variablePrefix :
     allocator.VARIABLE_PREFIX;

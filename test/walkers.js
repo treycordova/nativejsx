@@ -7,7 +7,7 @@ let generators = require('../source/generators.js');
 let allocator = require('../source/allocator.js');
 
 describe('walkers', function() {
-  afterEach(function() {
+  beforeEach(function() {
     allocator.reset();
   });
 

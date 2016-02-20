@@ -105,10 +105,6 @@ walkers.JSXElement = (node, state, c) => {
         c(child, state);
     }
   }
-
-  if(state && state.parent === null) {
-    allocator.reset();
-  }
 }
 
 walkers.JSXExpressionContainer = (node, state, c) => {
