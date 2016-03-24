@@ -3,7 +3,7 @@
 Want all the goodness of JSX _without_ the Babel dependency?
 Like the idea of keeping JSX around as a general-purpose templating language?
 
-nativejsx is a well-rounded feature set that makes sense within the realm of JavaScript's native DOM API.
+nativejsx is a well-rounded JSX feature subset that makes sense within the realm of JavaScript's native DOM API.
 
 I know. "Why all the words?" Just show you something.
 
