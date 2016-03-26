@@ -1,6 +1,6 @@
 ## nativejsx [![Build Status](https://travis-ci.org/treycordova/nativejsx.svg?branch=master)](https://travis-ci.org/treycordova/nativejsx) [![Version Status](https://img.shields.io/npm/v/nativejsx.svg)](https://www.npmjs.org/package/nativejsx)
 #### JSX to native DOM API transpilation.
-Want all the goodness of JSX _without_ the Babel dependency?
+Want all the goodness of JSX _without_ the Babel dependency?  
 Like the idea of keeping JSX around as a general-purpose templating language?
 
 nativejsx is a well-rounded JSX feature subset that makes sense within the realm of JavaScript's native DOM API.
