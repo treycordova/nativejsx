@@ -55,7 +55,7 @@
 	(function() {
 	  if (typeof HTMLElement.prototype.setAttributes !== 'function') {
 	    HTMLElement.prototype.setAttributes = function(attributes) {
-	      return __webpack_require__(2)(element, attributes);
+	      return __webpack_require__(2)(this, attributes);
 	    };
 	  }
 	})();
