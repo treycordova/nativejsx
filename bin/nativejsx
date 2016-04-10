@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var program = require('commander');
+var nativejsx = require('../source/nativejsx.js');
+
+function compile(files, outputDirectory) {
+  files.forEach(function(file) {
+    var jsx = nativejsx.parseSync(file);
+    var extension = path.extname(file);
+    var filename = path.basename(file, extension);
+    var outputFilePath = path.join(outputDirectory, filename + '.js');
+
+    fs.writeFileSync(outputFilePath, jsx, 'utf8');
+  });
+}
+
+program.
+  version('0.0.1').
+  description('A simple command line utility for nativejsx.').
+  option('-o, --output <directory>', 'The directory to place compiled JSX files').
+  on('--help', function() {
+    console.log(' Examples:');
+    console.log();
+    console.log('  $ nativejsx path/awesome.jsx --output compiled/');
+    console.log('  $ nativejsx path-to-jsx/**/*.jsx --output compiled/');
+    console.log();
+  }).
+  parse(process.argv);
+
+if (Array.isArray(program.args) && typeof program.output === 'string') {
+  var outputDirectory = path.join(process.cwd(), program.output);
+  var exists = fs.existsSync(outputDirectory);
+
+  if (exists) {
+    var stats = fs.statSync(outputDirectory);
+    var isNotDirectory = !stats.isDirectory();
+
+    if (isNotDirectory) {
+      console.error('Output path already exists as a non-directory file.');
+      program.help();
+      process.exit(1);
+    } else {
+      compile(program.args, outputDirectory);
+    }
+  } else {
+    try {
+      fs.mkdir(outputDirectory);
+      compile(program.args, outputDirectory);
+    } catch (error) {
+      console.error('Could not create directory, %s.', program.output);
+      process.exit(1);
+    }
+  }
+} else {
+  program.help();
+}

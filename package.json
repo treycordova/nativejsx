@@ -6,6 +6,7 @@
   "dependencies": {
     "acorn": "^2.6.4",
     "acorn-jsx": "^2.0.1",
+    "commander": "^2.9.0",
     "escodegen": "^1.7.1",
     "merge": "^1.2.0"
   },
