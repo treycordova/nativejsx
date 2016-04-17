@@ -8,6 +8,7 @@
     "acorn-jsx": "^2.0.1",
     "commander": "^2.9.0",
     "escodegen": "^1.7.1",
+    "glob": "^7.0.3",
     "merge": "^1.2.0"
   },
   "devDependencies": {

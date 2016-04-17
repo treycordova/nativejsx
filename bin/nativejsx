@@ -2,10 +2,12 @@
 
 var fs = require('fs');
 var path = require('path');
+var glob = require('glob');
 var program = require('commander');
 var nativejsx = require('../source/nativejsx.js');
 
 function compile(files, outputDirectory) {
+  files = typeof files === 'string' ? glob.sync(files) : files;
   files.forEach(function(file) {
     var jsx = nativejsx.parseSync(file);
     var extension = path.extname(file);
