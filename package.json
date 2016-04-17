@@ -25,6 +25,9 @@
     "test": "./node_modules/.bin/mocha --harmony",
     "build": "node ."
   },
+  "bin": {
+    "nativejsx": "./bin/nativejsx"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/treycordova/nativejsx.git"
