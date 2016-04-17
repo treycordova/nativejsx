@@ -1,6 +1,6 @@
 ## nativejsx [![Build Status](https://travis-ci.org/treycordova/nativejsx.svg?branch=master)](https://travis-ci.org/treycordova/nativejsx) [![Version Status](https://img.shields.io/npm/v/nativejsx.svg)](https://www.npmjs.org/package/nativejsx)
 #### JSX to native DOM API transpilation.
-Like the idea of keeping JSX around as a general-purpose templating language?  
+Like the idea of keeping JSX around as a general-purpose templating language?
 nativejsx is a well-rounded JSX feature subset that makes sense within the realm of JavaScript's native DOM API.
 
 I know. _"Why all the words?"_ Just show you something.
@@ -66,8 +66,8 @@ function template() {
 
 ##### IMPORTANT NOTES:
 ###### Tested Node Versions
-- 4.2.4
-- 5.2 - 5.5
+- 4.4.3
+- 5.10.1
 
 ###### Frontend Dependencies
 You have two choices:
