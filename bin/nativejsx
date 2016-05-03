@@ -34,7 +34,10 @@ program.
   }).
   parse(process.argv);
 
-if (Array.isArray(program.args) && typeof program.output === 'string') {
+var hasPaths = Array.isArray(program.args) && program.args.length > 0;
+var hasOutputDirectory = typeof program.output === 'string' && program.output.length > 0;
+
+if (hasPaths && hasOutputDirectory) {
   var outputDirectory = path.join(process.cwd(), program.output);
   var exists = fs.existsSync(outputDirectory);
 
@@ -58,6 +61,31 @@ if (Array.isArray(program.args) && typeof program.output === 'string') {
       process.exit(1);
     }
   }
-} else {
+} else if (hasPaths) {
   program.help();
+} else {
+  var stdin = '';
+
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('readable', function() {
+    var chunk = process.stdin.read();
+
+    if (chunk != null) {
+      stdin += chunk.toString();
+    }
+
+    process.nextTick(function() {
+      process.stdin.end();
+    });
+  });
+
+  process.stdin.on('finish', function() {
+    if (stdin) {
+      process.stdout.write(
+        nativejsx.transpile(stdin)
+      );
+    } else {
+      program.help();
+    }
+  });
 }
