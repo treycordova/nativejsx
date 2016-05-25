@@ -8,6 +8,9 @@ var nativejsx = require('../source/nativejsx.js');
 
 function compile(files, outputDirectory) {
   files.forEach(function(file) {
+    if(!outputDirectory) {
+      var outputDirectory = path.dirname(file);
+    }
     if (glob.hasMagic(file)) {
       compile(glob.sync(file), outputDirectory);
     } else {
@@ -62,7 +65,7 @@ if (hasPaths && hasOutputDirectory) {
     }
   }
 } else if (hasPaths) {
-  program.help();
+  compile(program.args);
 } else {
   var stdin = '';
 
