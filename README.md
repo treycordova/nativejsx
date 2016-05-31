@@ -99,7 +99,7 @@ transpile(jsx)
 - **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}, ecmaVersion: 6}`.
 
 #### Build Tools
-- **Shell Script**: `nativejsx path-to-jsx/**/*.jsx --output ./here`.
+- **Shell Script**: `nativejsx path-to-jsx/**/*.jsx [--output ./here]`. (See `nativejsx -h` for examples.)
 - **Webpack**: [nativejsx-loader](https://github.com/treycordova/nativejsx-loader).
 - **Grunt**: [grunt-nativejsx](https://github.com/treycordova/grunt-nativejsx).
 - **Gulp**: [gulp-nativejsx](https://github.com/treycordova/gulp-nativejsx).

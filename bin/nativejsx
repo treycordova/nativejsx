@@ -8,9 +8,8 @@ var nativejsx = require('../source/nativejsx.js');
 
 function compile(files, outputDirectory) {
   files.forEach(function(file) {
-    if(!outputDirectory) {
-      var outputDirectory = path.dirname(file);
-    }
+    outputDirectory = outputDirectory || path.dirname(file);
+
     if (glob.hasMagic(file)) {
       compile(glob.sync(file), outputDirectory);
     } else {
@@ -25,7 +24,7 @@ function compile(files, outputDirectory) {
 }
 
 program.
-  version('0.0.1').
+  version('0.1.0').
   description('A simple command line utility for nativejsx.').
   option('-o, --output <directory>', 'The directory to place compiled JSX files').
   on('--help', function() {
@@ -33,6 +32,12 @@ program.
     console.log();
     console.log('  $ nativejsx path/awesome.jsx --output compiled/');
     console.log('  $ nativejsx path-to-jsx/**/*.jsx --output compiled/');
+    console.log();
+    console.log('  # Output goes to the location of the current file being processed.');
+    console.log('  $ nativejsx path-to-jsx/**/*.jsx');
+    console.log();
+    console.log('  # All jsx is processed at once and compiled into a single file.');
+    console.log('  $ cat path-to-jsx/**/*.jsx | nativejsx > large-compiled-file.js');
     console.log();
   }).
   parse(process.argv);
