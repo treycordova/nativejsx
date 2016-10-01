@@ -21,9 +21,14 @@ transformers.JSXAttribute = (node, state) => {
   let value = node.value.expression ?
     node.value.expression :
     node.value;
-  let transform = name.startsWith('on') ?
-    compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value) :
-    compositions.setAttribute(state.name, name, value);
+  let transform = null;
+  if(name.startsWith('on')) {
+    transform = compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value)
+  } else if(name.startsWith('context')) {
+    transform = compositions.assignValueToKeyContext(value.value, state.name)
+  } else {
+    transform = compositions.setAttribute(state.name, name, value)
+  }
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];

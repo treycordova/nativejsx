@@ -11,6 +11,14 @@ const compiled = [
   '}();'
 ].join('\n')
 
+const contextCompiled = [
+  'var hello = function () {',
+  "    var $$a = document.createElement('div');",
+  "    this.foo = $$a;",
+  '    return $$a;',
+  '}();'
+].join('\n')
+
 describe('nativejsx', function() {
   beforeEach(function() {
     nativejsx.allocator.reset();
@@ -33,6 +41,27 @@ describe('nativejsx', function() {
       assert.equal(
         nativejsx.transpile(source),
         compiled
+      );
+    });
+  });
+
+  describe('transpile with the context attribute', function() {
+    let source;
+
+    beforeEach(function() {
+      source = fs.readFileSync('./test/jsx/testcontext.jsx');
+    });
+
+    it('returns a String', function() {
+      assert.isString(
+        nativejsx.transpile(source)
+      );
+    });
+
+    it('returns a transpiled String', function() {
+      assert.equal(
+        nativejsx.transpile(source),
+        contextCompiled
       );
     });
   });

@@ -14,6 +14,42 @@ describe('transformers', function() {
       state = {name: 'name'};
     });
 
+    describe('when attribute is an context', function() {
+      beforeEach(function() {
+        node.name.name = 'context';
+        node.value.value = 'key';
+      });
+      it('transforms into an `this.key=name`, removing "context', function() {
+        let value = node.value.value;
+        transformers.JSXAttribute(node, state);
+        assert.deepPropertyVal(
+          node,
+          'expression.type',
+          'AssignmentExpression'
+        );
+        assert.deepPropertyVal(
+          node,
+          'expression.left.type',
+          'MemberExpression'
+        );
+        assert.deepPropertyVal(
+          node,
+          'expression.left.object.type',
+          'ThisExpression'
+        );
+        assert.deepPropertyVal(
+          node,
+          'expression.left.property.name',
+          value
+        );
+        assert.deepPropertyVal(
+          node,
+          'expression.right.name',
+          state.name
+        );
+      })
+    });
+
     describe('when attribute is an event', function() {
       beforeEach(function() {
         node.name.name = 'onclick';

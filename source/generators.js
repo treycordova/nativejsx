@@ -32,7 +32,7 @@ let literal = generators.literal = (value) => {
 let member = generators.member = (object, property) => {
   return {
     type: 'MemberExpression',
-    object: object.type === 'FunctionExpression' ? object : identifier(object),
+    object: object.type ? object : identifier(object),
     property: identifier(property)
   };
 }
