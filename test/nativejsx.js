@@ -49,7 +49,7 @@ describe('nativejsx', function() {
     let source;
 
     beforeEach(function() {
-      source = fs.readFileSync('./test/jsx/testcontext.jsx');
+      source = fs.readFileSync('./test/jsx/testContext.jsx');
     });
 
     it('returns a String', function() {
