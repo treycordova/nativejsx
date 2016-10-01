@@ -65,7 +65,8 @@ describe('nativejsx', function() {
 
         assert.deepEqual(options, {
           variablePrefix: '__',
-          declarationType: 'var'
+          declarationType: 'var',
+          context: false
         });
       });
 
