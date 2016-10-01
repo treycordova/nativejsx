@@ -56,7 +56,8 @@ describe('nativejsx', function() {
     describe('with options', function() {
       let options = {
         variablePrefix: '__',
-        declarationType: 'var'
+        declarationType: 'var',
+        context: false
       };
 
       it('doesn\'t mutate the options passed in as an argument', function() {
@@ -81,6 +82,15 @@ describe('nativejsx', function() {
         assert.match(
           nativejsx.parseSync('./test/jsx/test.jsx', options),
           /let __a/
+        );
+      });
+
+      it('outputs transpiled source with context allowed', function() {
+        options.context = true;
+
+        assert.match(
+          nativejsx.parseSync('./test/jsx/test.jsx', options),
+          /\.call\(this\)/
         );
       });
     });

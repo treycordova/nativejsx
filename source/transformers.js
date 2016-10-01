@@ -8,7 +8,8 @@ let usingSetAttributes = false;
 let usingAppendChildren = false;
 
 let transformers = {
-  INLINE_NATIVEJSX_HELPERS: false
+  INLINE_NATIVEJSX_HELPERS: false,
+  ALLOWABLE_CONTEXT: false
 };
 
 /**
@@ -65,11 +66,23 @@ transformers.JSXElement = (node, state) => {
       }
     })(node);
 
-    body = generators.closure(
-      body.concat(
-        generators.returns(generators.identifier(state.name))
-      )
-    );
+    if(transformers.ALLOWABLE_CONTEXT) {
+      body = generators.callExpression(
+        generators.member(
+          generators.functionExpression(null, [], body.concat(
+            generators.returns(generators.identifier(state.name))
+          )),
+          "call"
+        ),
+        [generators.context()]
+      );
+    } else {
+      body = generators.closure(
+        body.concat(
+          generators.returns(generators.identifier(state.name))
+        )
+      );
+    }
 
     for (let key in body) node[key] = body[key];
   }

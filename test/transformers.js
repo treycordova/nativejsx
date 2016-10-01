@@ -197,8 +197,17 @@ describe('transformers', function() {
 
     describe('as a root element', function() {
       beforeEach(function() {
+        element = {
+          openingElement: {
+            name: {
+              name: 'div'
+            },
+            attributes: []
+          },
+          children : []
+        };
+        transformers.ALLOWABLE_CONTEXT = false;
         state = {parent: null, name: 'name'};
-        element.children = [];
       });
 
       it('creates a closure', function() {
@@ -213,6 +222,29 @@ describe('transformers', function() {
         assert.deepPropertyVal(
           element,
           'callee.body.body[1].type',
+          'ReturnStatement'
+        );
+      });
+
+      it('with context allowed, creates a closure with member expression call', function() {
+        transformers.ALLOWABLE_CONTEXT = true;
+        transformers.JSXElement(element, state);
+
+        assert.deepPropertyVal(
+          element,
+          'callee.type',
+          'MemberExpression'
+        );
+
+        assert.deepPropertyVal(
+          element,
+          'callee.object.type',
+          'FunctionExpression'
+        );
+
+        assert.deepPropertyVal(
+          element,
+          'callee.object.body.body[1].type',
           'ReturnStatement'
         );
       });
