@@ -15,7 +15,7 @@
     "chai": "^3.4.1",
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
-    "webpack": "^1.12.12"
+    "webpack": "^1.14.0"
   },
   "engines": [
     {
@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/mocha --harmony",
-    "build": "node ."
+    "build": "node .",
+    "package": "webpack"
   },
   "bin": {
     "nativejsx": "./bin/nativejsx"
