@@ -9,6 +9,12 @@ generators.DECLARATION_TYPE = 'var';
  * JavaScript Node Generators
  */
 
+let context = generators.context = () => {
+  return {
+    type: 'ThisExpression'
+  };
+}
+
 let identifier = generators.identifier = (name) => {
   return {
     type: 'Identifier',
@@ -26,7 +32,7 @@ let literal = generators.literal = (value) => {
 let member = generators.member = (object, property) => {
   return {
     type: 'MemberExpression',
-    object: identifier(object),
+    object: object.type ? object : identifier(object),
     property: identifier(property)
   };
 }

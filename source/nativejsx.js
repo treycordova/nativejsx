@@ -20,7 +20,8 @@ const defaults = {
       jsx: true
     },
     ecmaVersion: 6
-  }
+  },
+  context: false
 };
 
 let allocator = nativejsx.allocator = require('./allocator.js');
@@ -70,6 +71,8 @@ let transpile = nativejsx.transpile = (jsx, options) => {
     generators.DECLARATION_TYPE;
 
   transformers.INLINE_NATIVEJSX_HELPERS = safe.prototypes === 'inline';
+
+  transformers.ALLOWABLE_CONTEXT = safe.context === true;
 
   let ast = acorn.parse(jsx, safe.acorn);
   walk.simple(ast, transformers, walker);

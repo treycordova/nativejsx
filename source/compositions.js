@@ -10,6 +10,13 @@ let compositions = {};
 const attributes = { 'className': 'class' };
 const properties = ['required', 'disabled'];
 
+compositions.assignValueToKeyContext = (keyContext, value) => {
+  return generators.assigns(
+      generators.member(generators.context(),keyContext),
+      generators.identifier(value)
+  );
+}
+
 compositions.createElement = (variable, tag) => {
   return generators.variableDeclaration(
     variable,

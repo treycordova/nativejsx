@@ -11,6 +11,14 @@ const compiled = [
   '}();'
 ].join('\n')
 
+const contextCompiled = [
+  'var hello = function () {',
+  "    var $$a = document.createElement('div');",
+  "    this.foo = $$a;",
+  '    return $$a;',
+  '}();'
+].join('\n')
+
 describe('nativejsx', function() {
   beforeEach(function() {
     nativejsx.allocator.reset();
@@ -37,6 +45,27 @@ describe('nativejsx', function() {
     });
   });
 
+  describe('transpile with the context attribute', function() {
+    let source;
+
+    beforeEach(function() {
+      source = fs.readFileSync('./test/jsx/testContext.jsx');
+    });
+
+    it('returns a String', function() {
+      assert.isString(
+        nativejsx.transpile(source)
+      );
+    });
+
+    it('returns a transpiled String', function() {
+      assert.equal(
+        nativejsx.transpile(source),
+        contextCompiled
+      );
+    });
+  });
+
   describe('parse', function() {
     it('returns a Promise', function() {
       assert.instanceOf(nativejsx.parse('test.jsx'), Promise);
@@ -56,7 +85,8 @@ describe('nativejsx', function() {
     describe('with options', function() {
       let options = {
         variablePrefix: '__',
-        declarationType: 'var'
+        declarationType: 'var',
+        context: false
       };
 
       it('doesn\'t mutate the options passed in as an argument', function() {
@@ -64,7 +94,8 @@ describe('nativejsx', function() {
 
         assert.deepEqual(options, {
           variablePrefix: '__',
-          declarationType: 'var'
+          declarationType: 'var',
+          context: false
         });
       });
 
@@ -81,6 +112,15 @@ describe('nativejsx', function() {
         assert.match(
           nativejsx.parseSync('./test/jsx/test.jsx', options),
           /let __a/
+        );
+      });
+
+      it('outputs transpiled source with context allowed', function() {
+        options.context = true;
+
+        assert.match(
+          nativejsx.parseSync('./test/jsx/test.jsx', options),
+          /\.call\(this\)/
         );
       });
     });

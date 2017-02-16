@@ -5,6 +5,16 @@ let escodegen = require('escodegen');
 let generators = require('../source/generators.js');
 
 describe('generators', function() {
+
+  describe('context', function() {
+    it("builds a JavaScript ThisExpression", function() {
+      assert.equal(
+        escodegen.generate(generators.context()),
+        'this'
+      );
+    })
+  });
+
   describe('identifier', function() {
     it('builds a JavaScript Identifier', function() {
       assert.equal(

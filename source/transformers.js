@@ -8,7 +8,8 @@ let usingSetAttributes = false;
 let usingAppendChildren = false;
 
 let transformers = {
-  INLINE_NATIVEJSX_HELPERS: false
+  INLINE_NATIVEJSX_HELPERS: false,
+  ALLOWABLE_CONTEXT: false
 };
 
 /**
@@ -20,9 +21,14 @@ transformers.JSXAttribute = (node, state) => {
   let value = node.value.expression ?
     node.value.expression :
     node.value;
-  let transform = name.startsWith('on') ?
-    compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value) :
-    compositions.setAttribute(state.name, name, value);
+  let transform = null;
+  if(name.startsWith('on')) {
+    transform = compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value)
+  } else if(name.startsWith('context')) {
+    transform = compositions.assignValueToKeyContext(value.value, state.name)
+  } else {
+    transform = compositions.setAttribute(state.name, name, value)
+  }
 
   for(let key in node) delete node[key];
   for(let key in transform) node[key] = transform[key];
@@ -65,11 +71,23 @@ transformers.JSXElement = (node, state) => {
       }
     })(node);
 
-    body = generators.closure(
-      body.concat(
-        generators.returns(generators.identifier(state.name))
-      )
-    );
+    if(transformers.ALLOWABLE_CONTEXT) {
+      body = generators.callExpression(
+        generators.member(
+          generators.functionExpression(null, [], body.concat(
+            generators.returns(generators.identifier(state.name))
+          )),
+          "call"
+        ),
+        [generators.context()]
+      );
+    } else {
+      body = generators.closure(
+        body.concat(
+          generators.returns(generators.identifier(state.name))
+        )
+      );
+    }
 
     for (let key in body) node[key] = body[key];
   }
