@@ -18,7 +18,7 @@ describe('walkers', function() {
 
     beforeEach(function() {
       node = {callee: 'callee'};
-      state = 'state';
+      state = {};
       recursiveCall = sinon.spy();
     });
 
@@ -58,7 +58,7 @@ describe('walkers', function() {
 
     beforeEach(function() {
       node = {consequent: 'consequent', alternate: 'alternate'};
-      state = 'state';
+      state = {};
       recursiveCall = sinon.spy();
     });
 
@@ -134,7 +134,7 @@ describe('walkers', function() {
 
     beforeEach(function() {
       node = {left: 'left', right: 'right'};
-      state = 'state';
+      state = {};
       recursiveCall = sinon.spy();
     });
 
@@ -193,7 +193,7 @@ describe('walkers', function() {
 
     beforeEach(function() {
       node = {};
-      state = 'state';
+      state = {};
       recursiveCall = sinon.spy();
     });
 
@@ -226,7 +226,7 @@ describe('walkers', function() {
 
     beforeEach(function() {
       node = {id: 'id'};
-      state = 'state';
+      state = {};
       recursiveCall = sinon.spy();
     });
 
@@ -354,7 +354,7 @@ describe('walkers', function() {
   describe('JSXExpressionContainer', function() {
     it('walks `expression`', function() {
       let node = {expression: 'expression'};
-      let state = 'state';
+      let state = {};
       let recursiveCall = sinon.spy();
 
       walkers.JSXExpressionContainer(node, state, recursiveCall);

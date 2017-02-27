@@ -70,15 +70,17 @@ const transpile = nativejsx.transpile = (jsx, options) => {
 
   transformers.INLINE_NATIVEJSX_HELPERS = safe.prototypes === 'inline';
 
+  const state = {transformed: false};
   const ast = acorn.parse(jsx, safe.acorn);
-  walk.simple(ast, transformers, walker);
+  walk.simple(ast, transformers, walker, state);
 
-  if (transformers.INLINE_NATIVEJSX_HELPERS) {
+  if (state.transformed && transformers.INLINE_NATIVEJSX_HELPERS) {
     ast.body = [
       require('./prototypal-helpers/setAttributes.ast.json'),
       require('./prototypal-helpers/appendChildren.ast.json'),
     ].concat(ast.body);
   }
+
   return escodegen.generate(ast);
 };
 

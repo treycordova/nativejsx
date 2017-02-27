@@ -13,7 +13,9 @@ walkers.CallExpression = (node, state, c) => {
   if (node.arguments) {
     for(let argument of node.arguments) {
       if (argument.type === 'JSXElement') {
-        c(argument, {name: allocator.next(), parent: null});
+        state.name = allocator.next();
+        state.parent = null;
+        c(argument, state);
       } else {
         c(argument, state, 'Expression');
       }
@@ -30,7 +32,9 @@ walkers.ConditionalExpression = (node, state, c) => {
     }
 
     if (branch.type === 'JSXElement') {
-      c(branch, {name: allocator.next(), parent: null});
+      state.name = allocator.next();
+      state.parent = null;
+      c(branch, state);
     } else {
       c(branch, state, 'Expression');
     }
@@ -40,7 +44,9 @@ walkers.ConditionalExpression = (node, state, c) => {
 walkers.LogicalExpression = (node, state, c) => {
   for (let branch of [node.left, node.right]) {
     if (branch.type === 'JSXElement') {
-      c(branch, {name: allocator.next(), parent: null});
+      state.name = allocator.next();
+      state.parent = null;
+      c(branch, state);
     } else {
       c(branch, state, 'Expression');
     }
@@ -50,10 +56,9 @@ walkers.LogicalExpression = (node, state, c) => {
 walkers.ReturnStatement = (node, state, c) => {
   if (node.argument) {
     if (node.argument.type === 'JSXElement') {
-      c(node.argument, {
-        name: allocator.next(),
-        parent: null
-      });
+      state.name = allocator.next();
+      state.parent = null;
+      c(node.argument, state);
     } else {
       c(node.argument, state, 'Expression');
     }
@@ -65,10 +70,9 @@ walkers.VariableDeclarator = (node, state, c) => {
 
   if (node.init) {
     if (node.init.type === 'JSXElement') {
-      c(node.init, {
-        name: allocator.next(),
-        parent: null
-      });
+      state.name = allocator.next();
+      state.parent = null;
+      c(node.init, state);
     } else {
       c(node.init, state, 'Expression');
     }
@@ -76,6 +80,8 @@ walkers.VariableDeclarator = (node, state, c) => {
 }
 
 walkers.JSXElement = (node, state, c) => {
+  state.transformed = true;
+
   for(let attribute of node.openingElement.attributes) {
     c(attribute, state);
   }
