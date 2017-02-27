@@ -1,6 +1,6 @@
 const generators = {};
 
-generators.ALLOWABLE_DECLARATION_TYPES = ['var', 'let'];
+generators.ALLOWABLE_DECLARATION_TYPES = ['var', 'let', 'const'];
 generators.DECLARATION_TYPE = 'var';
 
 /**

@@ -92,10 +92,10 @@ parseSync(fileName, options)
 transpile(jsx)
 ```
 ##### Options
-- **declarationType**: Either `var` (default) or `let`.
+- **declarationType**: `var` (default), `const`, or `let`.
 - **variablePrefix**: Any string (defaults to `$$`) you can conjure up that produces a _valid_ JavaScript variable.
 - **prototypes**: Either `true` (default) or `'inline'`.
-- **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}, ecmaVersion: 6}`.
+- **acorn**: All acorn options are available [here](https://github.com/ternjs/acorn#main-parser). Defaults to `{plugins: {jsx: true}, ecmaVersion: 6, sourceType: 'module'}`.
 
 #### Build Tools
 - **Shell Script**: `nativejsx path-to-jsx/**/*.jsx [--output ./here]`. (See `nativejsx -h` for examples.)
