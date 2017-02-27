@@ -1,9 +1,7 @@
-'use strict';
+const allocator = require('./allocator.js');
+const generators = require('./generators.js');
 
-let allocator = require('./allocator.js');
-let generators = require('./generators.js');
-
-let walkers = {};
+const walkers = {};
 
 /**
  * AST Walkers
@@ -26,9 +24,9 @@ walkers.CallExpression = (node, state, c) => {
 walkers.ConditionalExpression = (node, state, c) => {
   for (let branch of [node.consequent, node.alternate]) {
     if (branch.type === 'Literal' && branch.value === null) {
-      let jsx = generators.jsxelement('noscript')
-      for (let key in branch) delete branch[key];
-      for (let key in jsx) branch[key] = jsx[key];
+      const jsx = generators.jsxelement('noscript')
+      for(let key in branch) delete branch[key];
+      for(let key in jsx) branch[key] = jsx[key];
     }
 
     if (branch.type === 'JSXElement') {
@@ -85,7 +83,7 @@ walkers.JSXElement = (node, state, c) => {
   for(let child of node.children) {
     switch(child.type) {
       case 'Literal':
-        let value = child.value.replace('\n', '').trim();
+        const value = child.value.replace('\n', '').trim();
 
         if (value.length) {
           c(child, {

@@ -1,7 +1,5 @@
-'use strict';
-
-let generators = require('./generators.js');
-let compositions = {};
+const generators = require('./generators.js');
+const compositions = {};
 
 /**
  * Document API compositions

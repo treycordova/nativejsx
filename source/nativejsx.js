@@ -1,14 +1,12 @@
-'use strict';
+const fs = require('fs');
+const util = require('util');
 
-let fs = require('fs');
-let util = require('util');
+const merge = require('merge');
+const escodegen = require('escodegen');
+const acorn = require('acorn-jsx');
+const walk = require('acorn/dist/walk');
 
-let merge = require('merge');
-let escodegen = require('escodegen');
-let acorn = require('acorn-jsx');
-let walk = require('acorn/dist/walk');
-
-let nativejsx = {};
+const nativejsx = {};
 
 const defaults = {
   encoding: 'utf-8',
@@ -23,11 +21,11 @@ const defaults = {
   }
 };
 
-let allocator = nativejsx.allocator = require('./allocator.js');
-let generators = nativejsx.generators = require('./generators.js');
-let walker = nativejsx.walker = walk.make(require('./walkers.js'));
-let transformers = nativejsx.transformers = require('./transformers.js');
-let safeOptions = (options) => {
+const allocator = nativejsx.allocator = require('./allocator.js');
+const generators = nativejsx.generators = require('./generators.js');
+const walker = nativejsx.walker = walk.make(require('./walkers.js'));
+const transformers = nativejsx.transformers = require('./transformers.js');
+const safeOptions = (options) => {
   let copy = merge(
     {},
     defaults,
@@ -54,9 +52,9 @@ let safeOptions = (options) => {
  * @param {JSXOptions} options - User-defined compilation options.
  * @returns {String} - A String representing JSX transpiled to JavaScript.
  */
-let transpile = nativejsx.transpile = (jsx, options) => {
-  let safe = safeOptions(options);
-  let isValidDeclarationType = generators.
+const transpile = nativejsx.transpile = (jsx, options) => {
+  const safe = safeOptions(options);
+  const isValidDeclarationType = generators.
     ALLOWABLE_DECLARATION_TYPES.
     indexOf(safe.declarationType) !== -1;
 
@@ -71,7 +69,7 @@ let transpile = nativejsx.transpile = (jsx, options) => {
 
   transformers.INLINE_NATIVEJSX_HELPERS = safe.prototypes === 'inline';
 
-  let ast = acorn.parse(jsx, safe.acorn);
+  const ast = acorn.parse(jsx, safe.acorn);
   walk.simple(ast, transformers, walker);
 
   if (transformers.INLINE_NATIVEJSX_HELPERS) {
@@ -94,10 +92,10 @@ let transpile = nativejsx.transpile = (jsx, options) => {
  * @returns {Promise} - A Promise that resolves when the file is read and transpiled.
  */
 nativejsx.parse = (file, options) => {
-  let safe = safeOptions(options);
+  const safe = safeOptions(options);
 
   return new Promise((resolve, reject) => {
-    fs.readFile(file, safe.encoding, function(error, contents) {
+    fs.readFile(file, safe.encoding, (error, contents) => {
       if (error) return reject(error);
       resolve(transpile(contents, safe));
     });
@@ -115,7 +113,7 @@ nativejsx.parse = (file, options) => {
  * @returns {String} - A String containing valid JavaScript.
  */
 nativejsx.parseSync = (file, options) => {
-  let safe = safeOptions(options);
+  const safe = safeOptions(options);
 
   return transpile(
     fs.readFileSync(file, safe.encoding),

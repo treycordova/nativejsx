@@ -1,8 +1,8 @@
 'use strict';
 
-let fs = require('fs');
-let assert = require('chai').assert;
-let nativejsx = require('../source/nativejsx');
+const fs = require('fs');
+const assert = require('chai').assert;
+const nativejsx = require('../source/nativejsx');
 
 const compiled = [
   'var hello = function () {',
@@ -54,7 +54,7 @@ describe('nativejsx', function() {
     });
 
     describe('with options', function() {
-      let options = {
+      const options = {
         variablePrefix: '__',
         declarationType: 'var'
       };

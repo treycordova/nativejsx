@@ -1,6 +1,4 @@
-'use strict';
-
-let generators = {};
+const generators = {};
 
 generators.ALLOWABLE_DECLARATION_TYPES = ['var', 'let'];
 generators.DECLARATION_TYPE = 'var';
@@ -9,21 +7,21 @@ generators.DECLARATION_TYPE = 'var';
  * JavaScript Node Generators
  */
 
-let identifier = generators.identifier = (name) => {
+const identifier = generators.identifier = (name) => {
   return {
     type: 'Identifier',
     name
   };
 }
 
-let literal = generators.literal = (value) => {
+const literal = generators.literal = (value) => {
   return {
     type: 'Literal',
     value
   };
 }
 
-let member = generators.member = (object, property) => {
+const member = generators.member = (object, property) => {
   return {
     type: 'MemberExpression',
     object: identifier(object),
@@ -31,15 +29,15 @@ let member = generators.member = (object, property) => {
   };
 }
 
-let expressionStatement = generators.expressionStatement = (expression) => {
+const expressionStatement = generators.expressionStatement = (expression) => {
   return {
     type: 'ExpressionStatement',
     expression
   };
 };
 
-let callExpression = generators.callExpression = (callee, varargs) => {
-  let callExpression = {
+const callExpression = generators.callExpression = (callee, varargs) => {
+  const callExpression = {
     type: 'CallExpression',
     callee
   };
@@ -49,7 +47,7 @@ let callExpression = generators.callExpression = (callee, varargs) => {
   return callExpression;
 }
 
-let variableDeclaration = generators.variableDeclaration = (variable, callee, varargs) => {
+const variableDeclaration = generators.variableDeclaration = (variable, callee, varargs) => {
   return {
     type: 'VariableDeclaration',
     declarations: [{
@@ -61,7 +59,7 @@ let variableDeclaration = generators.variableDeclaration = (variable, callee, va
   };
 }
 
-let assigns = generators.assigns = (assigner, assignee) => {
+const assigns = generators.assigns = (assigner, assignee) => {
   return expressionStatement({
     type: 'AssignmentExpression',
     operator: '=',
@@ -70,14 +68,14 @@ let assigns = generators.assigns = (assigner, assignee) => {
   });
 }
 
-let returns = generators.returns = (argument) => {
+const returns = generators.returns = (argument) => {
   return {
     type: 'ReturnStatement',
     argument
   };
 }
 
-let functionExpression = generators.functionExpression = (id, params, body) => {
+const functionExpression = generators.functionExpression = (id, params, body) => {
   return {
     type: 'FunctionExpression',
     id: id ? identifier(id) : null,
@@ -89,24 +87,24 @@ let functionExpression = generators.functionExpression = (id, params, body) => {
   };
 };
 
-let closure = generators.closure = (body) => {
+const closure = generators.closure = (body) => {
   return callExpression(
     functionExpression(null, [], body)
   );
 }
 
-let jsxidentifier = generators.jsxidentifier = (name) => {
+const jsxidentifier = generators.jsxidentifier = (name) => {
   return {
     type: 'JSXIdentifier',
     name
   };
 };
 
-let jsxelement = generators.jsxelement = (name, attributes, children) => {
-  let hasChildren = Array.isArray(children) && children.length;
-  let hasAttributes = Array.isArray(attributes) && attributes.length;
+const jsxelement = generators.jsxelement = (name, attributes, children) => {
+  const hasChildren = Array.isArray(children) && children.length;
+  const hasAttributes = Array.isArray(attributes) && attributes.length;
 
-  let element = {
+  const element = {
     type: 'JSXElement',
     openingElement: {
       type: 'JSXOpeningElement',

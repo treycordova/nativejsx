@@ -1,13 +1,8 @@
-'use strict';
+const generators = require('./generators.js');
+const compositions = require('./compositions.js');
+const walk = require('acorn/dist/walk');
 
-let generators = require('./generators.js');
-let compositions = require('./compositions.js');
-let walk = require('acorn/dist/walk');
-
-let usingSetAttributes = false;
-let usingAppendChildren = false;
-
-let transformers = {
+const transformers = {
   INLINE_NATIVEJSX_HELPERS: false
 };
 
@@ -16,11 +11,11 @@ let transformers = {
  */
 
 transformers.JSXAttribute = (node, state) => {
-  let name = node.name.name;
-  let value = node.value.expression ?
+  const name = node.name.name;
+  const value = node.value.expression ?
     node.value.expression :
     node.value;
-  let transform = name.startsWith('on') ?
+  const transform = name.startsWith('on') ?
     compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value) :
     compositions.setAttribute(state.name, name, value);
 
@@ -30,7 +25,7 @@ transformers.JSXAttribute = (node, state) => {
 
 transformers.JSXSpreadAttribute = (node, state) => {
   let transform;
-  let value = node.argument.name;
+  const value = node.argument.name;
 
   if (transformers.INLINE_NATIVEJSX_HELPERS) {
     transform = compositions.setAttributesInline([
