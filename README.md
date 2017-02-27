@@ -66,8 +66,7 @@ function template() {
 
 ##### IMPORTANT NOTES:
 ###### Tested Node Versions
-- 4.4.3
-- 5.10.1
+- 6.10.0
 
 ###### Frontend Dependencies
 You have two choices:
