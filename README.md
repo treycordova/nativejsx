@@ -109,6 +109,7 @@ transpile(jsx)
 - ~~Hardened Nodal JSXExpressions~~.
 - ~~Gulp, grunt, and webpack plugins~~.
 - Source maps.
+- Support SVG elements.
 - (Your suggestion.)
 
 ##### Terminology
