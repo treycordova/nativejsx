@@ -1,115 +1,113 @@
-const allocator = require('./allocator.js');
-const generators = require('./generators.js');
-
-const walkers = {};
+const allocator = require('./allocator.js')
+const walkers = {}
 
 /**
  * AST Walkers
  */
 
 walkers.CallExpression = (node, state, c) => {
-  c(node.callee, state, 'Expression');
+  c(node.callee, state, 'Expression')
 
   if (node.arguments) {
-    for(let argument of node.arguments) {
+    for (let argument of node.arguments) {
       if (argument.type === 'JSXElement') {
-        state.name = allocator.next();
-        state.parent = null;
-        c(argument, state);
+        state.name = allocator.next()
+        state.parent = null
+        c(argument, state)
       } else {
-        c(argument, state, 'Expression');
+        c(argument, state, 'Expression')
       }
     }
   }
-};
+}
 
 walkers.ConditionalExpression = (node, state, c) => {
   for (let branch of [node.consequent, node.alternate]) {
     if (branch.type === 'JSXElement') {
-      state.name = allocator.next();
-      state.parent = null;
-      c(branch, state);
+      state.name = allocator.next()
+      state.parent = null
+      c(branch, state)
     } else {
-      c(branch, state, 'Expression');
+      c(branch, state, 'Expression')
     }
   }
-};
+}
 
 walkers.LogicalExpression = (node, state, c) => {
   for (let branch of [node.left, node.right]) {
     if (branch.type === 'JSXElement') {
-      state.name = allocator.next();
-      state.parent = null;
-      c(branch, state);
+      state.name = allocator.next()
+      state.parent = null
+      c(branch, state)
     } else {
-      c(branch, state, 'Expression');
+      c(branch, state, 'Expression')
     }
   }
-};
+}
 
 walkers.ReturnStatement = (node, state, c) => {
   if (node.argument) {
     if (node.argument.type === 'JSXElement') {
-      state.name = allocator.next();
-      state.parent = null;
-      c(node.argument, state);
+      state.name = allocator.next()
+      state.parent = null
+      c(node.argument, state)
     } else {
-      c(node.argument, state, 'Expression');
+      c(node.argument, state, 'Expression')
     }
   }
 }
 
 walkers.VariableDeclarator = (node, state, c) => {
-  c(node.id, state, 'Pattern');
+  c(node.id, state, 'Pattern')
 
   if (node.init) {
     if (node.init.type === 'JSXElement') {
-      state.name = allocator.next();
-      state.parent = null;
-      c(node.init, state);
+      state.name = allocator.next()
+      state.parent = null
+      c(node.init, state)
     } else {
-      c(node.init, state, 'Expression');
+      c(node.init, state, 'Expression')
     }
   }
 }
 
 walkers.JSXElement = (node, state, c) => {
-  state.transformed = true;
+  state.transformed = true
 
-  for(let attribute of node.openingElement.attributes) {
-    c(attribute, state);
+  for (let attribute of node.openingElement.attributes) {
+    c(attribute, state)
   }
 
-  for(let child of node.children) {
-    switch(child.type) {
+  for (let child of node.children) {
+    switch (child.type) {
       case 'Literal':
-        const value = child.value.replace('\n', '').trim();
+        const value = child.value.replace('\n', '').trim()
 
         if (value.length) {
           c(child, {
             name: allocator.next(),
             parent: state.name
-          });
+          })
         }
-        break;
+        break
       case 'JSXExpressionContainer':
       case 'JSXElement':
         c(child, {
           name: allocator.next(),
           parent: state.name
-        });
-        break;
+        })
+        break
       default:
-        c(child, state);
+        c(child, state)
     }
   }
 }
 
 walkers.JSXExpressionContainer = (node, state, c) => {
-  c(node.expression, state);
-};
+  c(node.expression, state)
+}
 
-walkers.JSXSpreadAttribute = () => {};
-walkers.JSXAttribute = () => {};
+walkers.JSXSpreadAttribute = () => {}
+walkers.JSXAttribute = () => {}
 
-module.exports = walkers;
+module.exports = walkers

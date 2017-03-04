@@ -1,2 +1,2 @@
-require('./setAttributes.prototype.js');
-require('./appendChildren.prototype.js');
+require('./setAttributes.prototype.js')
+require('./appendChildren.prototype.js')

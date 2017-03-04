@@ -1,8 +1,6 @@
-'use strict';
-
-const fs = require('fs');
-const assert = require('chai').assert;
-const nativejsx = require('../source/nativejsx');
+const fs = require('fs')
+const { assert } = require('chai')
+const nativejsx = require('../source/nativejsx')
 
 const compiled = [
   'var hello = function () {',
@@ -11,91 +9,86 @@ const compiled = [
   '}();'
 ].join('\n')
 
-describe('nativejsx', function() {
-  beforeEach(function() {
-    nativejsx.allocator.reset();
-  });
+describe('nativejsx', () => {
+  beforeEach(() => {
+    nativejsx.allocator.reset()
+  })
 
-  describe('transpile', function() {
-    let source;
+  describe('transpile', () => {
+    let source
 
-    beforeEach(function() {
-      source = fs.readFileSync('./test/jsx/test.jsx');
-    });
+    beforeEach(() => {
+      source = fs.readFileSync('./test/jsx/test.jsx')
+    })
 
-    it('returns a String', function() {
+    it('returns a String', () => {
       assert.isString(
         nativejsx.transpile(source)
-      );
-    });
+      )
+    })
 
-    it('returns a transpiled String', function() {
+    it('returns a transpiled String', () => {
       assert.equal(
         nativejsx.transpile(source),
         compiled
-      );
-    });
-  });
+      )
+    })
+  })
 
-  describe('parse', function() {
-    it('returns a Promise', function() {
-      assert.instanceOf(nativejsx.parse('test.jsx'), Promise);
-    });
+  describe('parse', () => {
+    it('returns a Promise', () => {
+      assert.instanceOf(nativejsx.parse('test.jsx'), Promise)
+    })
 
-    it('resolves the promise with a transpiled String', function(done) {
-      nativejsx.parse('./test/jsx/test.jsx').then(function(javascript) {
-        assert.equal(javascript, compiled);
-        done();
-      }, function() {
-        done('Parsing failed. Are you missing a file?');
-      }).catch(function(error) {
-        done(error);
-      });
-    });
+    it('resolves the promise with a transpiled String', () => {
+      return nativejsx.parse('./test/jsx/test.jsx').then((javascript) => {
+        assert.equal(javascript, compiled)
+      })
+    })
 
-    describe('with options', function() {
+    describe('with options', () => {
       const options = {
         variablePrefix: '__',
         declarationType: 'var'
-      };
+      }
 
-      it('doesn\'t mutate the options passed in as an argument', function() {
-        nativejsx.parse('./test/jsx/test.jsx', options);
+      it('doesn\'t mutate the options passed in as an argument', () => {
+        nativejsx.parse('./test/jsx/test.jsx', options)
 
         assert.deepEqual(options, {
           variablePrefix: '__',
           declarationType: 'var'
-        });
-      });
+        })
+      })
 
-      it('outputs transpiled source with __ variable prefixes', function() {
+      it('outputs transpiled source with __ variable prefixes', () => {
         assert.match(
           nativejsx.parseSync('./test/jsx/test.jsx', options),
           /var __a/
-        );
-      });
+        )
+      })
 
-      it('outputs transpiled source with `let` variable declarations', function() {
-        options.declarationType = 'let';
+      it('outputs transpiled source with `let` variable declarations', () => {
+        options.declarationType = 'let'
 
         assert.match(
           nativejsx.parseSync('./test/jsx/test.jsx', options),
           /let __a/
-        );
-      });
-    });
-  });
+        )
+      })
+    })
+  })
 
-  describe('parseSync', function() {
-    it('returns a String', function() {
-      assert.isString(nativejsx.parseSync('./test/jsx/test.jsx'));
-    });
+  describe('parseSync', () => {
+    it('returns a String', () => {
+      assert.isString(nativejsx.parseSync('./test/jsx/test.jsx'))
+    })
 
-    it('returns a transpiled String', function() {
+    it('returns a transpiled String', () => {
       assert.equal(
         nativejsx.parseSync('./test/jsx/test.jsx'),
         compiled
-      );
-    });
-  });
-});
+      )
+    })
+  })
+})

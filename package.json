@@ -15,7 +15,8 @@
     "chai": "^3.4.1",
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
-    "webpack": "^1.12.12"
+    "standard": "^9.0.0",
+    "webpack": "^2.2.1"
   },
   "engines": [
     {
@@ -23,8 +24,8 @@
     }
   ],
   "scripts": {
-    "test": "./node_modules/.bin/mocha --harmony",
-    "build": "node ./scripts/generate-asts.js && ./node_modules/.bin/webpack"
+    "test": "standard && ./node_modules/.bin/mocha --harmony",
+    "build": "standard && node ./scripts/generate-asts.js && ./node_modules/.bin/webpack"
   },
   "bin": {
     "nativejsx": "./bin/nativejsx"
@@ -48,5 +49,18 @@
   "bugs": {
     "url": "https://github.com/treycordova/nativejsx/issues"
   },
-  "homepage": "https://github.com/treycordova/nativejsx#readme"
+  "homepage": "https://github.com/treycordova/nativejsx#readme",
+  "standard": {
+    "ignore": [
+      "dist",
+      "test/jsx"
+    ],
+    "globals": [
+      "HTMLElement",
+      "DOMException",
+      "describe",
+      "beforeEach",
+      "it"
+    ]
+  }
 }

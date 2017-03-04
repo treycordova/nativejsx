@@ -1,1 +1,1 @@
-var hello = <div></div>;
+var hello = <div />

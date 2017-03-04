@@ -1,81 +1,79 @@
-'use strict';
+const { assert } = require('chai')
+const escodegen = require('escodegen')
+const generators = require('../source/generators.js')
+const compositions = require('../source/compositions.js')
 
-let assert = require('chai').assert;
-let escodegen = require('escodegen');
-let generators = require('../source/generators.js');
-let compositions = require('../source/compositions.js');
-
-describe('compositions', function() {
-  describe('createElement', function() {
-    it('builds `var hello = document.createElement(\'body\');`', function() {
+describe('compositions', () => {
+  describe('createElement', () => {
+    it('builds `var hello = document.createElement(\'body\')`', () => {
       assert.equal(
         escodegen.generate(compositions.createElement('hello', 'body')),
         "var hello = document.createElement('body');"
-      );
-    });
-  });
+      )
+    })
+  })
 
-  describe('createTextNode', function() {
-    it('builds `var hello = document.createTextNode(\'Hello\');`', function() {
+  describe('createTextNode', () => {
+    it('builds `var hello = document.createTextNode(\'Hello\')`', () => {
       assert.equal(
         escodegen.generate(
           compositions.createTextNode('hello', generators.literal('Hello'))
         ),
         "var hello = document.createTextNode('Hello');"
-      );
-    });
-  });
+      )
+    })
+  })
 
-  describe('setAttribute', function() {
-    it('builds `hello.setAttribute(\'hello\', \'world\');`', function() {
+  describe('setAttribute', () => {
+    it('builds `hello.setAttribute(\'hello\', \'world\')`', () => {
       assert.equal(
         escodegen.generate(
           compositions.setAttribute('hello', 'hello', generators.literal('world'))
         ),
         "hello.setAttribute('hello', 'world');"
-      );
-    });
-  });
+      )
+    })
+  })
 
-  describe('setAttributes', function() {
-    it('builds `hello.setAttributes(world);`', function() {
+  describe('setAttributes', () => {
+    it('builds `hello.setAttributes(world)`', () => {
       assert.equal(
         escodegen.generate(
           compositions.setAttributes('hello', generators.identifier('world'))
         ),
-        "hello.setAttributes(world);"
-      );
-    });
-  });
+        'hello.setAttributes(world);'
+      )
+    })
+  })
 
-  describe('addEventListener', function() {
-    it('builds `hello.addEventListener(\'click\', world);`', function() {
+  describe('addEventListener', () => {
+    it('builds `hello.addEventListener(\'click\', world)`', () => {
       assert.equal(
         escodegen.generate(
           compositions.addEventListener('hello', 'click', generators.identifier('world'))
         ),
         "hello.addEventListener('click', world);"
-      );
-    });
-  });
+      )
+    })
+  })
 
-  describe('appendChild', function() {
-    it('builds `hello.appendChild(\'world\');`', function() {
+  describe('appendChild', () => {
+    it('builds `hello.appendChild(\'world\')`', () => {
       assert.equal(
         escodegen.generate(compositions.appendChild('hello', 'world')),
-        "hello.appendChild(world);"
-      );
-    });
-  });
+        'hello.appendChild(world);'
+      )
+    })
+  })
 
-  describe('appendChildren', function() {
-    it('builds `hello.appendChildren(world);`', function() {
+  describe('appendChildren', () => {
+    it('builds `hello.appendChildren(world)`', () => {
       assert.equal(
         escodegen.generate(
           compositions.appendChildren('hello', generators.identifier('world'))
         ),
-        "hello.appendChildren(world);"
-      );
-    });
-  });
-});
+        'hello.appendChildren(world);'
+      )
+    })
+  })
+})
