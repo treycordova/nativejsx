@@ -97,34 +97,6 @@ describe('walkers', function() {
         );
       });
     });
-
-    describe('when `consequent` is a null Literal', function() {
-      it('injects a JSXElement of <noscript> in the null\'s place', function() {
-        node.consequent = {type: 'Literal', value: null};
-        walkers.ConditionalExpression(node, state, recursiveCall);
-        assert.isTrue(recursiveCall.called);
-        assert.isTrue(
-          recursiveCall.calledWith(
-            generators.jsxelement('noscript'),
-            {name: '$$a', parent: null}
-          )
-        );
-      });
-    });
-
-    describe('when `alternate` is a null Literal', function() {
-      it('injects a JSXElement of <noscript> in the null\'s place', function() {
-        node.alternate = {type: 'Literal', value: null};
-        walkers.ConditionalExpression(node, state, recursiveCall);
-        assert.isTrue(recursiveCall.called);
-        assert.isTrue(
-          recursiveCall.calledWith(
-            generators.jsxelement('noscript'),
-            {name: '$$a', parent: null}
-          )
-        );
-      });
-    });
   });
 
   describe('LogicalExpression', function() {

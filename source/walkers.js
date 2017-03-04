@@ -25,12 +25,6 @@ walkers.CallExpression = (node, state, c) => {
 
 walkers.ConditionalExpression = (node, state, c) => {
   for (let branch of [node.consequent, node.alternate]) {
-    if (branch.type === 'Literal' && branch.value === null) {
-      const jsx = generators.jsxelement('noscript')
-      for(let key in branch) delete branch[key];
-      for(let key in jsx) branch[key] = jsx[key];
-    }
-
     if (branch.type === 'JSXElement') {
       state.name = allocator.next();
       state.parent = null;
