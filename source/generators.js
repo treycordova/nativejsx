@@ -24,8 +24,8 @@ generators.literal = (value) => {
 generators.member = (object, property) => {
   return {
     type: 'MemberExpression',
-    object: generators.identifier(object),
-    property: generators.identifier(property)
+    object,
+    property
   }
 }
 
@@ -87,9 +87,21 @@ generators.functionExpression = (id, params, body) => {
   }
 }
 
-generators.closure = (body) => {
+generators.thisExpression = () => {
+  return {
+    type: 'ThisExpression'
+  }
+}
+
+generators.contextualClosure = (body) => {
   return generators.callExpression(
-    generators.functionExpression(null, [], body)
+    generators.member(
+      generators.functionExpression(null, [], body),
+      generators.identifier('call')
+    ),
+    [
+      generators.thisExpression()
+    ]
   )
 }
 

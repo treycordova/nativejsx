@@ -59,7 +59,7 @@ transformers.JSXElement = (node, state) => {
       }
     })(node)
 
-    body = generators.closure(
+    body = generators.contextualClosure(
       body.concat(
         generators.returns(generators.identifier(state.name))
       )

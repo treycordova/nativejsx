@@ -11,7 +11,10 @@ const properties = ['required', 'disabled']
 compositions.createElement = (variable, tag) => {
   return generators.variableDeclaration(
     variable,
-    generators.member('document', 'createElement'),
+    generators.member(
+      generators.identifier('document'),
+      generators.identifier('createElement')
+    ),
     [generators.literal(tag)]
   )
 }
@@ -19,7 +22,10 @@ compositions.createElement = (variable, tag) => {
 compositions.createTextNode = (variable, expression) => {
   return generators.variableDeclaration(
     variable,
-    generators.member('document', 'createTextNode'),
+    generators.member(
+      generators.identifier('document'),
+      generators.identifier('createTextNode')
+    ),
     [expression]
   )
 }
@@ -30,13 +36,19 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
 
   if (isProperty) {
     return generators.assigns(
-      generators.member(variable, mappedAttribute),
+      generators.member(
+        generators.identifier(variable),
+        generators.identifier(mappedAttribute)
+      ),
       generators.literal(true)
     )
   } else {
     return generators.expressionStatement(
       generators.callExpression(
-        generators.member(variable, 'setAttribute'),
+        generators.member(
+          generators.identifier(variable),
+          generators.identifier('setAttribute')
+        ),
         [generators.literal(mappedAttribute), assignmentExpression]
       )
     )
@@ -46,7 +58,10 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
 compositions.setAttributes = (variable, assignmentExpression) => {
   return generators.expressionStatement(
     generators.callExpression(
-      generators.member(variable, 'setAttributes'),
+      generators.member(
+        generators.identifier(variable),
+        generators.identifier('setAttributes')
+      ),
       [assignmentExpression]
     )
   )
@@ -62,7 +77,10 @@ compositions.setAttributesInline = (variable, varargs) => {
 compositions.addEventListener = (variable, event, expression) => {
   return generators.expressionStatement(
     generators.callExpression(
-      generators.member(variable, 'addEventListener'),
+      generators.member(
+        generators.identifier(variable),
+        generators.identifier('addEventListener')
+      ),
       [generators.literal(event), expression]
     )
   )
@@ -71,7 +89,10 @@ compositions.addEventListener = (variable, event, expression) => {
 compositions.appendChild = (parent, child) => {
   return generators.expressionStatement(
     generators.callExpression(
-      generators.member(parent, 'appendChild'),
+      generators.member(
+        generators.identifier(parent),
+        generators.identifier('appendChild')
+      ),
       [generators.identifier(child)]
     )
   )
@@ -80,7 +101,10 @@ compositions.appendChild = (parent, child) => {
 compositions.appendChildren = (parent, expression) => {
   return generators.expressionStatement(
     generators.callExpression(
-      generators.member(parent, 'appendChildren'),
+      generators.member(
+        generators.identifier(parent),
+        generators.identifier('appendChildren')
+      ),
       [expression]
     )
   )

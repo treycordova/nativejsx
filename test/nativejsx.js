@@ -6,7 +6,7 @@ const compiled = [
   'var hello = function () {',
   "    var $$a = document.createElement('div');",
   '    return $$a;',
-  '}();'
+  '}.call(this);'
 ].join('\n')
 
 describe('nativejsx', () => {

@@ -204,12 +204,18 @@ describe('transformers', () => {
         assert.deepPropertyVal(
           element,
           'callee.type',
+          'MemberExpression'
+        )
+
+        assert.deepPropertyVal(
+          element,
+          'callee.object.type',
           'FunctionExpression'
         )
 
         assert.deepPropertyVal(
           element,
-          'callee.body.body[1].type',
+          'callee.object.body.body[1].type',
           'ReturnStatement'
         )
       })
@@ -222,13 +228,13 @@ describe('transformers', () => {
           ]
         })
 
-        it('adds chidren transforms to the body', () => {
+        it('adds children transforms to the body', () => {
           transformers.JSXElement(element, state)
 
-          assert.deepProperty(element, 'callee.body.body')
-          assert.lengthOf(element.callee.body.body, 5)
+          assert.deepProperty(element, 'callee.object.body.body')
+          assert.lengthOf(element.callee.object.body.body, 5)
           assert.include(
-            element.callee.body.body,
+            element.callee.object.body.body,
             'transform1',
             'transform2',
             'transform3'

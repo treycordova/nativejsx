@@ -25,7 +25,10 @@ describe('generators', () => {
     it('builds a JavaScript MemberExpression', () => {
       assert.equal(
         escodegen.generate(
-          generators.member('hello', 'world')
+          generators.member(
+            generators.identifier('hello'),
+            generators.identifier('world')
+          )
         ),
         'hello.world'
       )
@@ -37,7 +40,10 @@ describe('generators', () => {
       assert.equal(
         escodegen.generate(
           generators.expressionStatement(
-           generators.member('hello', 'world')
+            generators.member(
+              generators.identifier('hello'),
+              generators.identifier('world')
+            )
           )
         ),
         'hello.world;'
@@ -108,15 +114,15 @@ describe('generators', () => {
     })
   })
 
-  describe('closure', () => {
-    it('builds a JavaScript FunctionExpression', () => {
+  describe('contextualClosure', () => {
+    it('builds a JavaScript .call-enabled closure', () => {
       assert.equal(
         escodegen.generate(
-          generators.closure(
+          generators.contextualClosure(
             [generators.literal('hello')]
           )
         ),
-        "function () {\n    'hello'\n}()"
+        "function () {\n    'hello'\n}.call(this)"
       )
     })
   })
