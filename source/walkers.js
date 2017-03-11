@@ -11,9 +11,12 @@ walkers.CallExpression = (node, state, c) => {
   if (node.arguments) {
     for (let argument of node.arguments) {
       if (argument.type === 'JSXElement') {
-        state.name = allocator.next()
-        state.parent = null
-        c(argument, state)
+        state.transformed = true
+
+        c(argument, {
+          name: allocator.next(),
+          parent: null
+        })
       } else {
         c(argument, state, 'Expression')
       }
@@ -24,9 +27,12 @@ walkers.CallExpression = (node, state, c) => {
 walkers.ConditionalExpression = (node, state, c) => {
   for (let branch of [node.consequent, node.alternate]) {
     if (branch.type === 'JSXElement') {
-      state.name = allocator.next()
-      state.parent = null
-      c(branch, state)
+      state.transformed = true
+
+      c(branch, {
+        name: allocator.next(),
+        parent: null
+      })
     } else {
       c(branch, state, 'Expression')
     }
@@ -36,9 +42,12 @@ walkers.ConditionalExpression = (node, state, c) => {
 walkers.LogicalExpression = (node, state, c) => {
   for (let branch of [node.left, node.right]) {
     if (branch.type === 'JSXElement') {
-      state.name = allocator.next()
-      state.parent = null
-      c(branch, state)
+      state.transformed = true
+
+      c(branch, {
+        name: allocator.next(),
+        parent: null
+      })
     } else {
       c(branch, state, 'Expression')
     }
@@ -48,9 +57,12 @@ walkers.LogicalExpression = (node, state, c) => {
 walkers.ReturnStatement = (node, state, c) => {
   if (node.argument) {
     if (node.argument.type === 'JSXElement') {
-      state.name = allocator.next()
-      state.parent = null
-      c(node.argument, state)
+      state.transformed = true
+
+      c(node.argument, {
+        name: allocator.next(),
+        parent: null
+      })
     } else {
       c(node.argument, state, 'Expression')
     }
@@ -62,9 +74,12 @@ walkers.VariableDeclarator = (node, state, c) => {
 
   if (node.init) {
     if (node.init.type === 'JSXElement') {
-      state.name = allocator.next()
-      state.parent = null
-      c(node.init, state)
+      state.transformed = true
+
+      c(node.init, {
+        name: allocator.next(),
+        parent: null
+      })
     } else {
       c(node.init, state, 'Expression')
     }
@@ -72,8 +87,6 @@ walkers.VariableDeclarator = (node, state, c) => {
 }
 
 walkers.JSXElement = (node, state, c) => {
-  state.transformed = true
-
   for (let attribute of node.openingElement.attributes) {
     c(attribute, state)
   }

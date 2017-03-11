@@ -65,6 +65,7 @@ if (hasPaths && hasOutputDirectory) {
       fs.mkdir(outputDirectory);
       compile(program.args, outputDirectory);
     } catch (error) {
+      console.error(error);
       console.error('Could not create directory, %s.', program.output);
       process.exit(1);
     }
