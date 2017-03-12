@@ -131,6 +131,6 @@ transpile(jsx)
 #### What the heck is `setAttributes`?
 `setAttributes` handles the [JSXSpreadAttribute](https://facebook.github.io/react/docs/jsx-spread.html) expression that is in the JSX Specification. In other words, `<div {...attributes}></div>`, where `attributes` is an object containing _valid_ HTML attribute names and values, should just work. There isn't a convenient way to do this with native DOM.
 #### What the heck is `setStyles`?
-`setStyles` takes an `Object` that maps keys to HTMLElement.prototype.style and sets the corresponding value. This is an reimplementation of React's fancy style attribute.
+`setStyles` takes an `Object` that maps keys to `HTMLElement.prototype.style` and sets the corresponding value. This is a reimplementation of React's fancy style attribute.
 #### Why does it output everything in a closure?
 I'm glad you stuck around to ask. Due to the imperative nature of the native DOM API, we're outputting variable allocations – you know, the "$$a" stuff. To avoid variable clobbering, our DOM goodies are tucked away into a JavaScript closure, safe and sound.
