@@ -67,10 +67,33 @@ compositions.setAttributes = (variable, assignmentExpression) => {
   )
 }
 
-compositions.setAttributesInline = (variable, varargs) => {
-  return generators.callExpression(
-    generators.identifier('__setAttributes'),
-    varargs || []
+compositions.setAttributesInline = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('__setAttributes'),
+      varargs || []
+    )
+  )
+}
+
+compositions.setStyles = (variable, assignmentExpression) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.member(
+        generators.identifier(variable),
+        generators.identifier('setStyles')
+      ),
+      [assignmentExpression]
+    )
+  )
+}
+
+compositions.setStylesInline = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('__setStyles'),
+      varargs || []
+    )
   )
 }
 

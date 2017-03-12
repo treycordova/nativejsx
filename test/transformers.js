@@ -12,6 +12,29 @@ describe('transformers', () => {
       state = {name: 'name'}
     })
 
+    describe('when attribute is "style"', () => {
+      beforeEach(() => {
+        node.name.name = 'style'
+      })
+
+      it('transforms into a `setStyles` call', () => {
+        node.value = { type: 'ObjectExpression', properties: [] }
+        transformers.JSXAttribute(node, state)
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.object.name',
+          state.name
+        )
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.property.name',
+          'setStyles'
+        )
+      })
+    })
+
     describe('when attribute is an event', () => {
       beforeEach(() => {
         node.name.name = 'onclick'

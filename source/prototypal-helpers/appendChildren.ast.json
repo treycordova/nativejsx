@@ -8,6 +8,8 @@
     "end": 25,
     "name": "__appendChildren"
   },
+  "generator": false,
+  "expression": false,
   "params": [
     {
       "type": "Identifier",
@@ -131,6 +133,8 @@
               "start": 127,
               "end": 350,
               "id": null,
+              "generator": false,
+              "expression": false,
               "params": [
                 {
                   "type": "Identifier",
@@ -341,13 +345,11 @@
                     }
                   }
                 ]
-              },
-              "expression": false
+              }
             }
           ]
         }
       }
     ]
-  },
-  "expression": false
+  }
 }

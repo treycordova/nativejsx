@@ -12,14 +12,15 @@ Here's the scenario, Capitan:
 function template() {
   return (
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary" onclick={eventListener}>Left</button>
+      <button type="button" class="btn btn-secondary" onClick={eventListener}>Left</button>
       <button type="button" class="btn btn-secondary">Middle</button>
       <button type="button" class="btn btn-secondary">Right</button>
+      <button type="button" class="btn btn-secondary" style={{backgroundColor: 'peachpuff'}}>Primary</button>
     </div>
   );
 }
 ```
-That looks sexy, right? Yeah.
+That looks awesome, right? Yeah.
 Now we bake it in `nativejsx` using `nativejsx.parse`:
 ```javascript
 var nativejsx = require('nativejsx');
@@ -35,35 +36,41 @@ nativejsx.parse('dat-btn-group.js', {
 That `console.log` reveals the amazing native DOM API output:
 ```javascript
 function template() {
-  return function () {
-    var $$a = document.createElement('div');
-      $$a.setAttribute('class', 'btn-group');
-      $$a.setAttribute('role', 'group');
-      $$a.setAttribute('aria-label', 'Basic example');
-      var $$b = document.createElement('button');
-        $$b.setAttribute('type', 'button');
-        $$b.setAttribute('class', 'btn btn-secondary');
-        $$b.addEventListener('click', eventListener);
-        $$a.appendChild($$b);
-        var $$c = document.createTextNode('Left');
-          $$b.appendChild($$c);
-      var $$d = document.createElement('button');
-        $$d.setAttribute('type', 'button');
-        $$d.setAttribute('class', 'btn btn-secondary');
-        $$a.appendChild($$d);
-        var $$e = document.createTextNode('Middle');
-          $$d.appendChild($$e);
-      var $$f = document.createElement('button');
-        $$f.setAttribute('type', 'button');
-        $$f.setAttribute('class', 'btn btn-secondary');
-        $$a.appendChild($$f);
-        var $$g = document.createTextNode('Right');
-          $$f.appendChild($$g);
-    return $$a;
-  }();
+    return function () {
+        var $$a = document.createElement('div');
+          $$a.setAttribute('class', 'btn-group');
+          $$a.setAttribute('role', 'group');
+          $$a.setAttribute('aria-label', 'Basic example');
+          var $$b = document.createElement('button');
+            $$b.setAttribute('type', 'button');
+            $$b.setAttribute('class', 'btn btn-secondary');
+            $$b.addEventListener('click', eventListener);
+            $$a.appendChild($$b);
+              var $$c = document.createTextNode('Left');
+              $$b.appendChild($$c);
+          var $$d = document.createElement('button');
+            $$d.setAttribute('type', 'button');
+            $$d.setAttribute('class', 'btn btn-secondary');
+            $$a.appendChild($$d);
+              var $$e = document.createTextNode('Middle');
+              $$d.appendChild($$e);
+          var $$f = document.createElement('button');
+            $$f.setAttribute('type', 'button');
+            $$f.setAttribute('class', 'btn btn-secondary');
+            $$a.appendChild($$f);
+              var $$g = document.createTextNode('Right');
+              $$f.appendChild($$g);
+          var $$h = document.createElement('button');
+            $$h.setAttribute('type', 'button');
+            $$h.setAttribute('class', 'btn btn-secondary');
+            $$h.setStyles({ backgroundColor: 'peachpuff' });
+            $$a.appendChild($$h);
+              var $$i = document.createTextNode('Primary');
+              $$h.appendChild($$i);
+        return $$a;
+    }.call(this);
 }
 ```
-
 ##### IMPORTANT NOTES:
 ###### Tested Node Versions
 - 6.10.0

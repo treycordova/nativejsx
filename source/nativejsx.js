@@ -77,6 +77,7 @@ const transpile = nativejsx.transpile = (jsx, options) => {
   if (state.transformed && transformers.INLINE_NATIVEJSX_HELPERS) {
     ast.body = [
       require('./prototypal-helpers/setAttributes.ast.json'),
+      require('./prototypal-helpers/setStyles.ast.json'),
       require('./prototypal-helpers/appendChildren.ast.json')
     ].concat(ast.body)
   }

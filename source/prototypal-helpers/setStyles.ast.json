@@ -1,0 +1,124 @@
+{
+  "type": "FunctionDeclaration",
+  "start": 0,
+  "end": 106,
+  "id": {
+    "type": "Identifier",
+    "start": 9,
+    "end": 20,
+    "name": "__setStyles"
+  },
+  "generator": false,
+  "expression": false,
+  "params": [
+    {
+      "type": "Identifier",
+      "start": 21,
+      "end": 28,
+      "name": "element"
+    },
+    {
+      "type": "Identifier",
+      "start": 30,
+      "end": 36,
+      "name": "styles"
+    }
+  ],
+  "body": {
+    "type": "BlockStatement",
+    "start": 38,
+    "end": 106,
+    "body": [
+      {
+        "type": "ForInStatement",
+        "start": 42,
+        "end": 104,
+        "left": {
+          "type": "VariableDeclaration",
+          "start": 47,
+          "end": 56,
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 51,
+              "end": 56,
+              "id": {
+                "type": "Identifier",
+                "start": 51,
+                "end": 56,
+                "name": "style"
+              },
+              "init": null
+            }
+          ],
+          "kind": "var"
+        },
+        "right": {
+          "type": "Identifier",
+          "start": 60,
+          "end": 66,
+          "name": "styles"
+        },
+        "body": {
+          "type": "ExpressionStatement",
+          "start": 68,
+          "end": 104,
+          "expression": {
+            "type": "AssignmentExpression",
+            "start": 68,
+            "end": 104,
+            "operator": "=",
+            "left": {
+              "type": "MemberExpression",
+              "start": 68,
+              "end": 88,
+              "object": {
+                "type": "MemberExpression",
+                "start": 68,
+                "end": 81,
+                "object": {
+                  "type": "Identifier",
+                  "start": 68,
+                  "end": 75,
+                  "name": "element"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "start": 76,
+                  "end": 81,
+                  "name": "style"
+                },
+                "computed": false
+              },
+              "property": {
+                "type": "Identifier",
+                "start": 82,
+                "end": 87,
+                "name": "style"
+              },
+              "computed": true
+            },
+            "right": {
+              "type": "MemberExpression",
+              "start": 91,
+              "end": 104,
+              "object": {
+                "type": "Identifier",
+                "start": 91,
+                "end": 97,
+                "name": "styles"
+              },
+              "property": {
+                "type": "Identifier",
+                "start": 98,
+                "end": 103,
+                "name": "style"
+              },
+              "computed": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

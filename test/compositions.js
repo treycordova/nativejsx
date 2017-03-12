@@ -46,6 +46,48 @@ describe('compositions', () => {
     })
   })
 
+  describe('setAttributesInline', () => {
+    it('builds `__setAttributes(hello, world)`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.setAttributesInline([
+            generators.identifier('hello'),
+            generators.identifier('world')
+          ])
+        ),
+        '__setAttributes(hello, world);'
+      )
+    })
+  })
+
+  describe('setStyles', () => {
+    it('builds `hello.setStyles({})`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.setStyles(
+            'hello',
+            { type: 'ObjectExpression', properties: [] }
+          )
+        ),
+        'hello.setStyles({});'
+      )
+    })
+  })
+
+  describe('setStylesInline', () => {
+    it('builds `__setStyles(hello, {})`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.setStylesInline([
+            generators.identifier('hello'),
+            { type: 'ObjectExpression', properties: [] }
+          ])
+        ),
+        '__setStyles(hello, {});'
+      )
+    })
+  })
+
   describe('addEventListener', () => {
     it('builds `hello.addEventListener(\'click\', world)`', () => {
       assert.equal(
@@ -73,6 +115,20 @@ describe('compositions', () => {
           compositions.appendChildren('hello', generators.identifier('world'))
         ),
         'hello.appendChildren(world);'
+      )
+    })
+  })
+
+  describe('appendChildrenInline', () => {
+    it('builds `__setAttributes(hello, world)`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.appendChildrenInline([
+            generators.identifier('hello'),
+            generators.identifier('world')
+          ])
+        ),
+        '__appendChildren(hello, world);'
       )
     })
   })
