@@ -9,6 +9,44 @@ describe('walkers', () => {
     allocator.reset()
   })
 
+  describe('AssignmentExpression', () => {
+    let node
+    let state
+    let recursiveCall
+
+    beforeEach(() => {
+      node = {left: '', right: {type: 'MemberExpression'}}
+      state = {}
+      recursiveCall = sinon.spy()
+    })
+
+    it('walks `left`', () => {
+      walkers.AssignmentExpression(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.called)
+      assert.isTrue(recursiveCall.calledWith(node.left, state, 'Expression'))
+    })
+
+    it('walks `right`', () => {
+      walkers.AssignmentExpression(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.calledTwice)
+      assert.isTrue(recursiveCall.calledWith(node.right, state, 'Expression'))
+    })
+
+    describe('when `right` is a JSXElement', () => {
+      it('walks the JSXElement with initialized state', () => {
+        node.right = {type: 'JSXElement'}
+        walkers.AssignmentExpression(node, state, recursiveCall)
+        assert.isTrue(recursiveCall.calledTwice)
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.right,
+            {name: '$$a', parent: null}
+          )
+        )
+      })
+    })
+  })
+
   describe('CallExpression', () => {
     let node
     let state

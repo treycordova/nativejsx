@@ -5,6 +5,21 @@ const walkers = {}
  * AST Walkers
  */
 
+walkers.AssignmentExpression = (node, state, c) => {
+  c(node.left, state, 'Expression')
+
+  if (node.right.type === 'JSXElement') {
+    state.transformed = true
+
+    c(node.right, {
+      name: allocator.next(),
+      parent: null
+    })
+  } else {
+    c(node.right, state, 'Expression')
+  }
+}
+
 walkers.CallExpression = (node, state, c) => {
   c(node.callee, state, 'Expression')
 
