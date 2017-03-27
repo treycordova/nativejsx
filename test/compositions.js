@@ -74,6 +74,17 @@ describe('compositions', () => {
     })
   })
 
+  describe('setReference', () => {
+    it('builds `hello.setReference(hello, world)`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.setReference('hello', generators.identifier('world'))
+        ),
+        'world(hello);'
+      )
+    })
+  })
+
   describe('setStyles', () => {
     it('builds `hello.setStyles({})`', () => {
       assert.equal(

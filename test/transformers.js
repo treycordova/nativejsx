@@ -35,6 +35,57 @@ describe('transformers', () => {
       })
     })
 
+    describe('when attribute is "ref"', () => {
+      beforeEach(() => {
+        node.name.name = 'ref'
+      })
+
+      it('transforms into a ref callback', () => {
+        node.value = generators.functionExpression(null, [], {})
+        transformers.JSXAttribute(node, state)
+
+        assert.deepPropertyVal(
+          node,
+          'expression.type',
+          'CallExpression'
+        )
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.type',
+          'FunctionExpression'
+        )
+
+        assert.deepPropertyVal(
+          node,
+          'expression.arguments[0].name',
+          state.name
+        )
+      })
+
+      it('transforms into a `setAttribute` call', () => {
+        transformers.JSXAttribute(node, state)
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.object.name',
+          state.name
+        )
+
+        assert.deepPropertyVal(
+          node,
+          'expression.callee.property.name',
+          'setAttribute'
+        )
+
+        assert.deepPropertyVal(
+          node,
+          'expression.arguments[1].value',
+          'value'
+        )
+      })
+    })
+
     describe('when attribute is an event', () => {
       beforeEach(() => {
         node.name.name = 'onclick'
