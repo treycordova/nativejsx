@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
   entry: {
@@ -6,7 +7,7 @@ module.exports = {
     'nativejsx-prototypes.min': './source/prototypal-helpers/index.js'
   },
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
   },
   plugins: [
