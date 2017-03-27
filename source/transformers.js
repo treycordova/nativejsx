@@ -2,7 +2,8 @@ const generators = require('./generators.js')
 const compositions = require('./compositions.js')
 
 const transformers = {
-  INLINE_NATIVEJSX_HELPERS: false
+  INLINE_NATIVEJSX_HELPERS: false,
+  MODULE_NATIVEJSX_HELPERS: false
 }
 
 /**
@@ -19,9 +20,19 @@ transformers.JSXAttribute = (node, state) => {
   if (name.startsWith('on')) {
     transform = compositions.addEventListener(state.name, name.substring(2).toLowerCase(), value)
   } else if (name === 'style') {
-    transform = transformers.INLINE_NATIVEJSX_HELPERS
-      ? compositions.setStylesInline([ generators.identifier(state.name), value ])
-      : compositions.setStyles(state.name, value)
+    if (transformers.INLINE_NATIVEJSX_HELPERS) {
+      transform = compositions.setStylesInline([
+        generators.identifier(state.name),
+        value
+      ])
+    } else if (transformers.MODULE_NATIVEJSX_HELPERS) {
+      transform = compositions.setStylesModule([
+        generators.identifier(state.name),
+        value
+      ])
+    } else {
+      transform = compositions.setStyles(state.name, value)
+    }
   } else {
     transform = compositions.setAttribute(state.name, name, value)
   }
@@ -36,6 +47,11 @@ transformers.JSXSpreadAttribute = (node, state) => {
 
   if (transformers.INLINE_NATIVEJSX_HELPERS) {
     transform = compositions.setAttributesInline([
+      generators.identifier(state.name),
+      generators.identifier(value)
+    ])
+  } else if (transformers.MODULE_NATIVEJSX_HELPERS) {
+    transform = compositions.setAttributesModule([
       generators.identifier(state.name),
       generators.identifier(value)
     ])
@@ -80,6 +96,11 @@ transformers.JSXElement = (node, state) => {
 transformers.JSXExpressionContainer = (node, state) => {
   if (transformers.INLINE_NATIVEJSX_HELPERS) {
     node.transform = compositions.appendChildrenInline([
+      generators.identifier(state.parent),
+      node.expression
+    ])
+  } else if (transformers.MODULE_NATIVEJSX_HELPERS) {
+    node.transform = compositions.appendChildrenModule([
       generators.identifier(state.parent),
       node.expression
     ])

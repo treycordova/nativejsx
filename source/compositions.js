@@ -76,6 +76,15 @@ compositions.setAttributesInline = (varargs) => {
   )
 }
 
+compositions.setAttributesModule = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('setAttributes'),
+      varargs || []
+    )
+  )
+}
+
 compositions.setStyles = (variable, assignmentExpression) => {
   return generators.expressionStatement(
     generators.callExpression(
@@ -92,6 +101,15 @@ compositions.setStylesInline = (varargs) => {
   return generators.expressionStatement(
     generators.callExpression(
       generators.identifier('__setStyles'),
+      varargs || []
+    )
+  )
+}
+
+compositions.setStylesModule = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('setStyles'),
       varargs || []
     )
   )
@@ -137,6 +155,15 @@ compositions.appendChildrenInline = (varargs) => {
   return generators.expressionStatement(
     generators.callExpression(
       generators.identifier('__appendChildren'),
+      varargs || []
+    )
+  )
+}
+
+compositions.appendChildrenModule = (varargs) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      generators.identifier('appendChildren'),
       varargs || []
     )
   )

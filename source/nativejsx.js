@@ -44,6 +44,34 @@ const safeOptions = (options) => {
 }
 
 /**
+ * @function setAttributes
+ * @description
+ * Sets multiple attributes at once using an object. This object
+ * must map to HTML-compliant attributes.
+ */
+nativejsx.setAttributes = require('./prototypal-helpers/setAttributes.js')
+const setAttributesAST = require('./prototypal-helpers/setAttributes.ast.json')
+
+/**
+ * @function appendChildren
+ * @description
+ * Appends multiple children at once using an array. Each child
+ * should be an HTMLElement or a string. If they're not, the function
+ * silently does nothing.
+ */
+nativejsx.appendChildren = require('./prototypal-helpers/appendChildren.js')
+const appendChildrenAST = require('./prototypal-helpers/appendChildren.ast.json')
+
+/**
+ * @function setStyles
+ * @description
+ * Sets CSS-based styles on any valid Element using the
+ * .style DOM API.
+ */
+nativejsx.setStyles = require('./prototypal-helpers/setStyles.js')
+const setStylesAST = require('./prototypal-helpers/setStyles.ast.json')
+
+/**
  * @function transpile
  * @description
  * Transpiles a String containing JSX source code to JavaScript
@@ -69,20 +97,26 @@ const transpile = nativejsx.transpile = (jsx, options) => {
     : generators.DECLARATION_TYPE
 
   transformers.INLINE_NATIVEJSX_HELPERS = safe.prototypes === 'inline'
+  transformers.MODULE_NATIVEJSX_HELPERS = safe.prototypes === 'module'
 
   const state = {transformed: false}
   const ast = acorn.parse(jsx, safe.acorn)
+
   walk.simple(ast, transformers, walker, state)
 
-  if (state.transformed && transformers.INLINE_NATIVEJSX_HELPERS) {
-    ast.body = [
-      require('./prototypal-helpers/setAttributes.ast.json'),
-      require('./prototypal-helpers/setStyles.ast.json'),
-      require('./prototypal-helpers/appendChildren.ast.json')
-    ].concat(ast.body)
-  }
+  if (state.transformed) {
+    if (transformers.INLINE_NATIVEJSX_HELPERS) {
+      ast.body = [
+        setAttributesAST,
+        setStylesAST,
+        appendChildrenAST
+      ].concat(ast.body)
+    }
 
-  return escodegen.generate(ast)
+    return escodegen.generate(ast)
+  } else {
+    return jsx
+  }
 }
 
 /**
