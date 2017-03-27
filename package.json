@@ -1,6 +1,6 @@
 {
   "name": "nativejsx",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "JSX to native DOM API transpilation.",
   "main": "source/nativejsx.js",
   "dependencies": {
