@@ -33,7 +33,7 @@ transformers.JSXAttribute = (node, state) => {
     } else {
       transform = compositions.setStyles(state.name, value)
     }
-  } else if (name === 'ref' && value.type !== 'Literal') {
+  } else if (name === 'ref' && value.type !== generators.literal('').type) {
     transform = compositions.setReference(state.name, value)
   } else {
     transform = compositions.setAttribute(state.name, name, value)
