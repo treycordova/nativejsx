@@ -266,6 +266,123 @@ describe('walkers', () => {
     })
   })
 
+  describe('ArrowFunctionExpression', () => {
+    let node
+    let state
+    let recursiveCall
+
+    beforeEach(() => {
+      node = {id: 'id'}
+      state = {}
+      recursiveCall = sinon.spy()
+    })
+
+    it('walks `id`', () => {
+      walkers.ArrowFunctionExpression(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.called)
+      assert.isTrue(recursiveCall.calledWith(node.id, state, 'Pattern'))
+    })
+
+    it('walks `body`', () => {
+      node.body = 'body'
+      walkers.ArrowFunctionExpression(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.calledTwice)
+      assert.isTrue(recursiveCall.calledWith(node.body, state, 'Expression'))
+    })
+
+    describe('when `body` is a JSXElement', () => {
+      it('walks `body` with initialized state', () => {
+        node.body = {type: 'JSXElement'}
+        walkers.ArrowFunctionExpression(node, state, recursiveCall)
+        assert.isTrue(recursiveCall.calledTwice)
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.body,
+            {name: '$$a', parent: null}
+          )
+        )
+      })
+    })
+  })
+
+  describe('AssignmentPattern', () => {
+    let node
+    let state
+    let recursiveCall
+
+    beforeEach(() => {
+      node = {left: 'left'}
+      state = {}
+      recursiveCall = sinon.spy()
+    })
+
+    it('walks `left`', () => {
+      walkers.AssignmentPattern(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.called)
+      assert.isTrue(recursiveCall.calledWith(node.left, state, 'Pattern'))
+    })
+
+    it('walks `right`', () => {
+      node.right = 'right'
+      walkers.AssignmentPattern(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.calledTwice)
+      assert.isTrue(recursiveCall.calledWith(node.right, state, 'Pattern'))
+    })
+
+    describe('when `right` is a JSXElement', () => {
+      it('walks `right` with initialized state', () => {
+        node.right = {type: 'JSXElement'}
+        walkers.AssignmentExpression(node, state, recursiveCall)
+        assert.isTrue(recursiveCall.calledTwice)
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.right,
+            {name: '$$a', parent: null}
+          )
+        )
+      })
+    })
+  })
+
+  describe('Property', () => {
+    let node
+    let state
+    let recursiveCall
+
+    beforeEach(() => {
+      node = {key: 'key'}
+      state = {}
+      recursiveCall = sinon.spy()
+    })
+
+    it('walks `key`', () => {
+      walkers.Property(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.called)
+      assert.isTrue(recursiveCall.calledWith(node.key, state, 'Property'))
+    })
+
+    it('walks `value`', () => {
+      node.value = 'value'
+      walkers.Property(node, state, recursiveCall)
+      assert.isTrue(recursiveCall.called)
+      assert.isTrue(recursiveCall.calledWith(node.value, state, 'Pattern'))
+    })
+
+    describe('when `value` is a JSXElement', () => {
+      it('walks `value` with initialized state', () => {
+        node.value = {type: 'JSXElement'}
+        walkers.Property(node, state, recursiveCall)
+        assert.isTrue(recursiveCall.calledTwice)
+        assert.isTrue(
+          recursiveCall.calledWith(
+            node.value,
+            {name: '$$a', parent: null}
+          )
+        )
+      })
+    })
+  })
+
   describe('JSXElement', () => {
     let node
     let state

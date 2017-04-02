@@ -101,6 +101,61 @@ walkers.VariableDeclarator = (node, state, c) => {
   }
 }
 
+walkers.ArrowFunctionExpression = (node, state, c) => {
+  if (node.id) {
+    c(node.id, state, 'Pattern')
+  }
+
+  if (node.body) {
+    if (node.body.type === 'JSXElement') {
+      state.transformed = true
+
+      c(node.body, {
+        name: allocator.next(),
+        parent: null
+      })
+    } else {
+      c(node.body, state, 'Expression')
+    }
+  }
+}
+
+walkers.AssignmentPattern = (node, state, c) => {
+  c(node.left, state, 'Pattern')
+
+  if (node.right) {
+    if (node.right.type === 'JSXElement') {
+      state.transformed = true
+
+      c(node.right, {
+        name: allocator.next(),
+        parent: null
+      })
+    } else {
+      c(node.right, state, 'Pattern')
+    }
+  }
+}
+
+walkers.Property = (node, state, c) => {
+  if (node.key) {
+    c(node.key, state, 'Property')
+  }
+
+  if (node.value) {
+    if (node.value.type === 'JSXElement') {
+      state.transformed = true
+
+      c(node.value, {
+        name: allocator.next(),
+        parent: null
+      })
+    } else {
+      c(node.value, state, 'Pattern')
+    }
+  }
+}
+
 walkers.JSXElement = (node, state, c) => {
   for (let attribute of node.openingElement.attributes) {
     c(attribute, state)
