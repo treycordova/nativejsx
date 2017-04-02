@@ -85,6 +85,15 @@ compositions.setAttributesModule = (varargs) => {
   )
 }
 
+compositions.setReference = (variable, assignmentExpression) => {
+  return generators.expressionStatement(
+    generators.callExpression(
+      assignmentExpression,
+      [generators.identifier(variable)]
+    )
+  )
+}
+
 compositions.setStyles = (variable, assignmentExpression) => {
   return generators.expressionStatement(
     generators.callExpression(

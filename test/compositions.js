@@ -8,7 +8,7 @@ describe('compositions', () => {
     it('builds `var hello = document.createElement(\'body\')`', () => {
       assert.equal(
         escodegen.generate(compositions.createElement('hello', 'body')),
-        "var hello = document.createElement('body');"
+        'var hello = document.createElement(\'body\');'
       )
     })
   })
@@ -19,7 +19,7 @@ describe('compositions', () => {
         escodegen.generate(
           compositions.createTextNode('hello', generators.literal('Hello'))
         ),
-        "var hello = document.createTextNode('Hello');"
+        'var hello = document.createTextNode(\'Hello\');'
       )
     })
   })
@@ -30,7 +30,7 @@ describe('compositions', () => {
         escodegen.generate(
           compositions.setAttribute('hello', 'hello', generators.literal('world'))
         ),
-        "hello.setAttribute('hello', 'world');"
+        'hello.setAttribute(\'hello\', \'world\');'
       )
     })
   })
@@ -70,6 +70,17 @@ describe('compositions', () => {
           ])
         ),
         'setAttributes(hello, world);'
+      )
+    })
+  })
+
+  describe('setReference', () => {
+    it('builds `hello.setReference(hello, world)`', () => {
+      assert.equal(
+        escodegen.generate(
+          compositions.setReference('hello', generators.identifier('world'))
+        ),
+        'world(hello);'
       )
     })
   })
@@ -122,7 +133,7 @@ describe('compositions', () => {
         escodegen.generate(
           compositions.addEventListener('hello', 'click', generators.identifier('world'))
         ),
-        "hello.addEventListener('click', world);"
+        'hello.addEventListener(\'click\', world);'
       )
     })
   })
