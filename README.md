@@ -13,7 +13,7 @@ function template() {
   return (
     <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-secondary" onClick={eventListener}>Left</button>
-      <button type="button" class="btn btn-secondary">Middle</button>
+      <button type="button" class="btn btn-secondary" ref={(ref) => this.middleButton = ref}>Middle</button>
       <button type="button" class="btn btn-secondary">Right</button>
       <button type="button" class="btn btn-secondary" style={{backgroundColor: 'peachpuff'}}>Primary</button>
     </div>
@@ -53,6 +53,7 @@ function template() {
             $$d.setAttribute('class', 'btn btn-secondary');
             $$a.appendChild($$d);
               var $$e = document.createTextNode('Middle');
+              ((ref) => this.middleButton = ref)($$e);
               $$d.appendChild($$e);
           var $$f = document.createElement('button');
             $$f.setAttribute('type', 'button');
