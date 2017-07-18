@@ -17,7 +17,7 @@ const defaults = {
     plugins: {
       jsx: true
     },
-    ecmaVersion: 6,
+    ecmaVersion: 8,
     sourceType: 'module'
   }
 }
