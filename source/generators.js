@@ -75,6 +75,15 @@ generators.returns = (argument) => {
   }
 }
 
+generators.if = (test, consequent, alternate) => {
+  return {
+    type: 'IfStatement',
+    test,
+    consequent,
+    alternate
+  }
+}
+
 generators.functionExpression = (id, params, body) => {
   return {
     type: 'FunctionExpression',

@@ -114,6 +114,19 @@ describe('generators', () => {
     })
   })
 
+  describe('if', () => {
+    it('builds a JavaScript IfStatement', () => {
+      assert.equal(
+        escodegen.generate(generators.if(
+          generators.identifier('true'),
+          generators.literal('hello'),
+          generators.literal('world'))
+        ),
+        "if (true)\n    'hello'\nelse\n    'world'"
+      )
+    })
+  })
+
   describe('contextualClosure', () => {
     it('builds a JavaScript .call-enabled closure', () => {
       assert.equal(
