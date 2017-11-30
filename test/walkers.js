@@ -355,24 +355,25 @@ describe('walkers', () => {
       recursiveCall = sinon.spy()
     })
 
-    it('walks `key`', () => {
+    it('walks when `key` is a subscripts', () => {
+      node.computed = true
       walkers.Property(node, state, recursiveCall)
       assert.isTrue(recursiveCall.called)
-      assert.isTrue(recursiveCall.calledWith(node.key, state, 'Property'))
+      assert.isTrue(recursiveCall.calledWith(node.key, state, 'Expression'))
     })
 
     it('walks `value`', () => {
       node.value = 'value'
       walkers.Property(node, state, recursiveCall)
       assert.isTrue(recursiveCall.called)
-      assert.isTrue(recursiveCall.calledWith(node.value, state, 'Pattern'))
+      assert.isTrue(recursiveCall.calledWith(node.value, state, 'Expression'))
     })
 
     describe('when `value` is a JSXElement', () => {
       it('walks `value` with initialized state', () => {
         node.value = {type: 'JSXElement'}
         walkers.Property(node, state, recursiveCall)
-        assert.isTrue(recursiveCall.calledTwice)
+        assert.isTrue(recursiveCall.called)
         assert.isTrue(
           recursiveCall.calledWith(
             node.value,

@@ -138,8 +138,8 @@ walkers.AssignmentPattern = (node, state, c) => {
 }
 
 walkers.Property = (node, state, c) => {
-  if (node.key) {
-    c(node.key, state, 'Property')
+  if (node.computed) {
+    c(node.key, state, 'Expression')
   }
 
   if (node.value) {
@@ -151,7 +151,7 @@ walkers.Property = (node, state, c) => {
         parent: null
       })
     } else {
-      c(node.value, state, 'Pattern')
+      c(node.value, state, 'Expression')
     }
   }
 }
