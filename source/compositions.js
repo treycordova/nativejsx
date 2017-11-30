@@ -40,7 +40,7 @@ compositions.setAttribute = (variable, attribute, assignmentExpression) => {
         generators.identifier(variable),
         generators.identifier(mappedAttribute)
       ),
-      generators.literal(true)
+      assignmentExpression
     )
   } else {
     return generators.expressionStatement(
