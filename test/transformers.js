@@ -205,7 +205,7 @@ describe('transformers', () => {
         assert.deepPropertyVal(
           node,
           'expression.right.value',
-          true
+          'value'
         )
       })
     })
