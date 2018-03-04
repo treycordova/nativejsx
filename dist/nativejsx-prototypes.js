@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -86,7 +86,7 @@
 (function () {
   if (typeof HTMLElement.prototype.setAttributes !== 'function') {
     HTMLElement.prototype.setAttributes = function (attributes) {
-      return __webpack_require__(4)(this, attributes)
+      return __webpack_require__(5)(this, attributes)
     }
   }
 })()
@@ -99,7 +99,7 @@
 (function () {
   if (typeof HTMLElement.prototype.setStyles !== 'function') {
     HTMLElement.prototype.setStyles = function (styles) {
-      return __webpack_require__(5)(this, styles)
+      return __webpack_require__(6)(this, styles)
     }
   }
 })()
@@ -123,6 +123,15 @@ module.exports = function appendChildren (element, children) {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1)
+__webpack_require__(2)
+__webpack_require__(0)
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = function setAttributes (element, attributes) {
@@ -142,21 +151,12 @@ module.exports = function setAttributes (element, attributes) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = function setStyles (element, styles) {
   for (var style in styles) element.style[style] = styles[style]
 }
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(1)
-__webpack_require__(2)
-__webpack_require__(0)
 
 
 /***/ })
