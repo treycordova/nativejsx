@@ -163,7 +163,9 @@ walkers.JSXElement = (node, state, c) => {
 
   for (let child of node.children) {
     switch (child.type) {
+      case 'JSXText':
       case 'Literal':
+        child.type = 'Literal'
         const value = child.value.replace('\n', '').trim()
 
         if (value.length) {
