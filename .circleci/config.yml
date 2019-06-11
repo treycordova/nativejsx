@@ -1,9 +1,49 @@
 version: 2
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.9.1
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10.16.0
+  test:
+    <<: *defaults
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-.
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - run: npm install
-      - run: npm test
+      - run:
+          name: Run tests
+          command: npm test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Set registry URL
+          command: npm set registry https://packagecloud.io/treycordova/shared/npm/
+      - run:
+          name: Publish package
+          command: npm publish
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
