@@ -1,3 +1,10 @@
+deploy:
+  provider: packagecloud
+  repository: "shared"
+  username: "treycordova"
+  token: e674cb947bf5af7452aebb01fe4157c53c456a6118f968fd
+  on:
+    branch: example
 language: node_js
 node_js:
   - "6.10.0"
