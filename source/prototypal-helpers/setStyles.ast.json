@@ -1,7 +1,7 @@
 {
   "type": "FunctionDeclaration",
   "start": 0,
-  "end": 106,
+  "end": 109,
   "id": {
     "type": "Identifier",
     "start": 9,
@@ -13,39 +13,39 @@
   "params": [
     {
       "type": "Identifier",
-      "start": 21,
-      "end": 28,
+      "start": 22,
+      "end": 29,
       "name": "element"
     },
     {
       "type": "Identifier",
-      "start": 30,
-      "end": 36,
+      "start": 31,
+      "end": 37,
       "name": "styles"
     }
   ],
   "body": {
     "type": "BlockStatement",
-    "start": 38,
-    "end": 106,
+    "start": 39,
+    "end": 109,
     "body": [
       {
         "type": "ForInStatement",
-        "start": 42,
-        "end": 104,
+        "start": 44,
+        "end": 106,
         "left": {
           "type": "VariableDeclaration",
-          "start": 47,
-          "end": 56,
+          "start": 49,
+          "end": 58,
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 51,
-              "end": 56,
+              "start": 53,
+              "end": 58,
               "id": {
                 "type": "Identifier",
-                "start": 51,
-                "end": 56,
+                "start": 53,
+                "end": 58,
                 "name": "style"
               },
               "init": null
@@ -55,63 +55,63 @@
         },
         "right": {
           "type": "Identifier",
-          "start": 60,
-          "end": 66,
+          "start": 62,
+          "end": 68,
           "name": "styles"
         },
         "body": {
           "type": "ExpressionStatement",
-          "start": 68,
-          "end": 104,
+          "start": 70,
+          "end": 106,
           "expression": {
             "type": "AssignmentExpression",
-            "start": 68,
-            "end": 104,
+            "start": 70,
+            "end": 106,
             "operator": "=",
             "left": {
               "type": "MemberExpression",
-              "start": 68,
-              "end": 88,
+              "start": 70,
+              "end": 90,
               "object": {
                 "type": "MemberExpression",
-                "start": 68,
-                "end": 81,
+                "start": 70,
+                "end": 83,
                 "object": {
                   "type": "Identifier",
-                  "start": 68,
-                  "end": 75,
+                  "start": 70,
+                  "end": 77,
                   "name": "element"
                 },
                 "property": {
                   "type": "Identifier",
-                  "start": 76,
-                  "end": 81,
+                  "start": 78,
+                  "end": 83,
                   "name": "style"
                 },
                 "computed": false
               },
               "property": {
                 "type": "Identifier",
-                "start": 82,
-                "end": 87,
+                "start": 84,
+                "end": 89,
                 "name": "style"
               },
               "computed": true
             },
             "right": {
               "type": "MemberExpression",
-              "start": 91,
-              "end": 104,
+              "start": 93,
+              "end": 106,
               "object": {
                 "type": "Identifier",
-                "start": 91,
-                "end": 97,
+                "start": 93,
+                "end": 99,
                 "name": "styles"
               },
               "property": {
                 "type": "Identifier",
-                "start": 98,
-                "end": 103,
+                "start": 100,
+                "end": 105,
                 "name": "style"
               },
               "computed": true

@@ -2,11 +2,47 @@ const fs = require('fs')
 const { assert } = require('chai')
 const nativejsx = require('../source/nativejsx')
 
-const compiled = [
+const compiledTest = [
   'var hello = function () {',
   "    var $$a = document.createElement('div');",
   '    return $$a;',
   '}.call(this);'
+].join('\n')
+
+const compiledNodeExpressions = [
+  'function test() {',
+  "    var hello = 'Hello, World!';",
+  '    var listener = function () {',
+  '    };',
+  '    return function () {',
+  "        var $$a = document.createElement('div');",
+  "        $$a.setAttribute('class', 'yes');",
+  "        $$a.addEventListener('click', listener);",
+  '        $$a.appendChildren(hello);',
+  "        var $$c = document.createElement('div');",
+  '        $$a.appendChild($$c);',
+  "        var $$d = document.createTextNode('Hello, World!');",
+  '        $$c.appendChild($$d);',
+  '        return $$a;',
+  '    }.call(this);',
+  '}',
+  'function test2() {',
+  '    return function () {',
+  "        var $$e = document.createElement('ul');",
+  '        $$e.appendChildren([',
+  '            1,',
+  '            2,',
+  '            3',
+  '        ].map(item => {',
+  '            return function () {',
+  "                var $$g = document.createElement('li');",
+  '                $$g.appendChildren(item);',
+  '                return $$g;',
+  '            }.call(this);',
+  '        }));',
+  '        return $$e;',
+  '    }.call(this);',
+  '}'
 ].join('\n')
 
 describe('nativejsx', () => {
@@ -14,7 +50,7 @@ describe('nativejsx', () => {
     nativejsx.allocator.reset()
   })
 
-  describe('transpile', () => {
+  describe('transpile test.jsx', () => {
     let source
 
     beforeEach(() => {
@@ -30,7 +66,29 @@ describe('nativejsx', () => {
     it('returns a transpiled String', () => {
       assert.equal(
         nativejsx.transpile(source),
-        compiled
+        compiledTest
+      )
+    })
+  })
+
+  describe('transpile node-expressions.jsx', () => {
+    let source
+
+    beforeEach(() => {
+      source = fs.readFileSync('./test/jsx/node-expressions.jsx')
+    })
+
+    it('returns a String', () => {
+      assert.isString(
+        nativejsx.transpile(source)
+      )
+    })
+
+    it('returns a transpiled String', () => {
+      console.log(nativejsx.transpile(source))
+      assert.equal(
+        nativejsx.transpile(source),
+        compiledNodeExpressions
       )
     })
   })
@@ -42,7 +100,7 @@ describe('nativejsx', () => {
 
     it('resolves the promise with a transpiled String', () => {
       return nativejsx.parse('./test/jsx/test.jsx').then((javascript) => {
-        assert.equal(javascript, compiled)
+        assert.equal(javascript, compiledTest)
       })
     })
 
@@ -87,7 +145,7 @@ describe('nativejsx', () => {
     it('returns a transpiled String', () => {
       assert.equal(
         nativejsx.parseSync('./test/jsx/test.jsx'),
-        compiled
+        compiledTest
       )
     })
   })
